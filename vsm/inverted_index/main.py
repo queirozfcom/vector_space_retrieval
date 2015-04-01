@@ -1,18 +1,41 @@
 from vsm.common.classes import MultiOrderedDict
-from xml.dom.minidom import parse, parseString
+from vsm.common.helpers.dom import get_contents,get_index
+from xml.dom import minidom
 
-import os
 import ConfigParser
+import os
+import resource
 
-current_file_location = os.path.dirname(os.path.realpath(__file__))
-config_filename = current_file_location+'/gli.cfg'
+config_file = 'gli.cfg'
 config_section = 'Steps'
 
-# what files should I read?
+current_file_location = os.path.dirname(os.path.realpath(__file__))
+
+config_file_absolute = current_file_location+'/'+config_file
+
 config = ConfigParser.RawConfigParser(dict_type=MultiOrderedDict)
+config.read(config_file_absolute)
 
-config.read(config_filename)
+input_files  = config.get('Steps','LEIA')
+output_files = config.get('Steps','ESCREVA')
 
-files_to_read = config.get('Steps','LEIA')
+all_articles = dict()
 
-print(files_to_read)
+for file in input_files:
+	absolute_file = current_file_location+'/'+file
+	xmldoc = minidom.parse(absolute_file)
+	
+	for record in xmldoc.getElementsByTagName("RECORD"):
+
+		index = get_index(record)
+		try:
+			contents = get_contents(record)
+		except RuntimeError:
+			continue
+
+		all_articles[index] = contents
+
+
+res = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
+print(res)
