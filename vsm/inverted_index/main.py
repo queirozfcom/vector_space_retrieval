@@ -1,10 +1,16 @@
+from __future__ import division
+from toolz.dicttoolz import keymap, valmap
 from vsm.common.classes import MultiOrderedDict
-from vsm.common.helpers.dom import get_contents,get_index
+from vsm.common.helpers.dom import get_contents,get_num
+from vsm.common.helpers.index import build_inverted_index,get_tokens
 from xml.dom import minidom
 
 import ConfigParser
+import csv
 import os
+import re
 import resource
+import nltk
 
 config_file = 'gli.cfg'
 config_section = 'Steps'
@@ -19,7 +25,7 @@ config.read(config_file_absolute)
 input_files  = config.get('Steps','LEIA')
 output_files = config.get('Steps','ESCREVA')
 
-all_articles = dict()
+articles = dict()
 
 for file in input_files:
 	absolute_file = current_file_location+'/'+file
@@ -27,14 +33,23 @@ for file in input_files:
 	
 	for record in xmldoc.getElementsByTagName("RECORD"):
 
-		index = get_index(record)
+		record_num = get_num(record)
 		try:
 			contents = get_contents(record)
 		except RuntimeError:
-			continue
+			continue # couldn't find article contents, skip
 
-		all_articles[index] = contents
+		articles[record_num] = contents
 
+tokens = valmap(get_tokens,articles)
+
+index = build_inverted_index(tokens,count_duplicates=True)
+
+for file in output_files:
+	absolute_file = current_file_location+'/'+file
+	w=csv.writer(open(absolute_file,"w"),delimiter=";")
+	for key,val in index.iteritems():
+		w.writerow([key,val])
 
 res = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
 
