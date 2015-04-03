@@ -7,15 +7,27 @@ from xml.dom import minidom
 
 import ConfigParser
 import csv
+import logging as log
 import os
 import re
 import resource
 import nltk
 
+current_file_location = os.path.dirname(os.path.realpath(__file__))
+
+log_file = '../../logs/vsm.log'
 config_file = 'gli.cfg'
 config_section = 'Steps'
 
-current_file_location = os.path.dirname(os.path.realpath(__file__))
+FORMAT='%(asctime)s %(levelname)s: %(message)s'
+DATEFMT='%d %b %H:%M:%S'
+log.basicConfig(
+	filename=current_file_location+'/'+log_file,
+	level=log.DEBUG, 
+	format=FORMAT,datefmt=DATEFMT,
+	filemode='w')
+
+log.info("Started module execution: 'inverted_index'")
 
 config_file_absolute = current_file_location+'/'+config_file
 
@@ -31,15 +43,23 @@ for file in input_files:
 	absolute_file = current_file_location+'/'+file
 	xmldoc = minidom.parse(absolute_file)
 	
-	for record in xmldoc.getElementsByTagName("RECORD"):
+	records = xmldoc.getElementsByTagName("RECORD")
+
+	no_of_articles_read = 0
+
+	for record in records:
 
 		record_num = get_num(record)
 		try:
 			contents = get_contents(record)
 		except RuntimeError:
+			log.warning("Found article with no contents; skipped.")
 			continue # couldn't find article contents, skip
 
+		no_of_articles_read += 1	
 		articles[record_num] = contents
+		
+	log.info('Read {0} articles'.format(no_of_articles_read))
 
 tokens = valmap(get_tokens,articles)
 
@@ -51,6 +71,8 @@ for file in output_files:
 	for key,val in index.iteritems():
 		w.writerow([key,val])
 
-res = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+log.info("Finished module execution: 'inverted_index'")
 
-print(res)
+# res = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
+# print(res)
