@@ -63,18 +63,9 @@ document_term_matrix = build_document_term_matrix(
 	max_token_length = max_token_length,
 	only_letters = restrict_to_letters )
 
-
 output_file_absolute = current_file_location+'/'+output_file
 
-fieldnames = build_term_vector(
-	inverted_index, 
-	weighting_function = weighting_function,
-	max_token_length = max_token_length,
-	only_letters = restrict_to_letters )
-fieldnames.insert(0,"Document ID")
-
 w = csv.writer(open(output_file_absolute,"w"),delimiter=";")
-w.writerow(fieldnames)
 
 for key,val in document_term_matrix.iteritems():
 	w.writerow([key,val])

@@ -51,7 +51,7 @@ for file in input_files:
 		try:
 			contents = get_contents(record)
 		except RuntimeError:
-			log.warning("Found article with no contents; skipped.")
+			log.warning("Found article with no contents ({0}); skipped.".format(record_num))
 			continue # couldn't find article contents, skip
 
 		no_of_articles_read += 1	
