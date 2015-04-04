@@ -9,8 +9,6 @@ import ConfigParser
 import csv
 import logging as log
 import os
-import re
-import resource
 import nltk
 
 current_file_location = os.path.dirname(os.path.realpath(__file__))
@@ -25,7 +23,7 @@ log.basicConfig(
 	filename=current_file_location+'/'+log_file,
 	level=log.DEBUG, 
 	format=FORMAT,datefmt=DATEFMT,
-	filemode='w')
+	filemode='w') # start new log file
 
 log.info("Started module execution: 'inverted_index'")
 
