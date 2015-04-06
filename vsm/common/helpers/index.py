@@ -1,14 +1,17 @@
 from __future__ import division
 from nltk.tokenize import word_tokenize
+from vsm.common.helpers.validators import validate_positive_integer
 
+import csv
 import math
 import pprint as pp
 import nltk
 import sys
 
-# dict should be a dictionary with identifiers as keys and a list of tokens
-# as value
-def build_inverted_index(tokens,count_duplicates=False):
+# Returns an inverted index (a dict where keys are terms and values are document identifiers)
+#   from a token list. The token list should be a dict where keys are document identifiers and 
+#   values are the list of tokens present in that document
+def build_inverted_index(tokens,count_duplicates=False, min_token_length=2, only_letters = True):
     index = dict()
     for key,token_list in tokens.iteritems():
         
@@ -16,9 +19,15 @@ def build_inverted_index(tokens,count_duplicates=False):
 
         for token_upper in set(token_list_upper):
 
-            # I'm not supposed to optimize it here
-            # if not token_upper.isalpha():
-            #   continue
+            # optimizations start
+            if only_letters:
+                if not token_upper.isalpha():
+                    continue
+
+            if len(token_upper) < min_token_length:
+                continue
+            # optimizations end
+
 
             if token_upper not in index:
                 index[token_upper] = list()
@@ -30,25 +39,26 @@ def build_inverted_index(tokens,count_duplicates=False):
                 index[token_upper].append(key) # just once
 
     return(index)           
-
+    
+# Return all tokens present in a text.
 def get_tokens(text):
     return(word_tokenize(text))
 
-
-def build_document_term_matrix(inverted_index, weighting_function, max_token_length, only_letters):
+# Build a dict where the keys are document identifiers and values are term vectors.
+def build_document_term_matrix(inverted_index, weighting_function, min_token_length, only_letters):
     
-    term_list = build_term_vector(inverted_index, weighting_function, max_token_length, only_letters)
+    if weighting_function not in ['tf-idf']:
+        raise ValueError("Invalid weighting function. Available values are {0}".format(supported_weighting_functions))
+
+    validate_positive_integer(min_token_length)    
+
+    term_list = build_term_vector(inverted_index, weighting_function, min_token_length, only_letters)
 
     document_id_list = _get_identifier_list(inverted_index)
 
     total_number_of_documents = len(document_id_list)
 
     inverse_doc_frequencies = _get_inverse_document_frequencies(total_number_of_documents, inverted_index)    
-
-    # with open('term_list.out','w') as out:
-    #     pp.pprint(term_list, stream=out, indent=1)
-
-    # sys.exit()
 
     # finished gathering the pieces, now for the actual matrix
     matrix = dict()
@@ -71,14 +81,14 @@ def build_document_term_matrix(inverted_index, weighting_function, max_token_len
 
 # Extract a list of all terms (keys in the inverted index). Terms will be normalized and possibly
 #   ignored altogether depending on parameters passed
-def build_term_vector(inverted_index, weighting_function, max_token_length, only_letters):
+def build_term_vector(inverted_index, weighting_function, min_token_length, only_letters):
     
     term_vector = list()
 
     for raw_token in inverted_index.keys():
         term = raw_token.upper().strip()
 
-        if len(term) < max_token_length:
+        if len(term) < min_token_length:
             continue
 
         if only_letters:
@@ -88,6 +98,25 @@ def build_term_vector(inverted_index, weighting_function, max_token_length, only
         term_vector.append(term)
 
     return(term_vector)
+
+def load_index_from_csv_file(absolute_path_to_file):
+    inverted_index = dict()
+
+    with open(absolute_path_to_file,'rb') as csvfile:
+        reader = csv.reader(csvfile,delimiter=';')
+
+        for row in reader:
+            token = row[0].strip()
+            document_occurrences = map(lambda str: int(str),
+                row[1].lstrip('[').rstrip(']').strip().split(','))
+
+            inverted_index[token] = document_occurrences
+
+    return(inverted_index)
+
+def extract_tokens(inverted_index):
+    return(inverted_index.keys())
+
 
 # Return all document identifiers that appear at least once in the inverted index
 def _get_identifier_list(inverted_index):
