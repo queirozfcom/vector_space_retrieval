@@ -1,5 +1,4 @@
 from pprint import pprint
-from toolz.dicttoolz import keymap, valmap
 from vsr.common.helpers.dom import (
 	get_query_num,
 	get_query_tokens,
@@ -88,15 +87,16 @@ for query in queries:
 
 log.info('Read {0} queries from file {1}'.format(no_of_queries_read,input_file))
 
-# we can already write the expected results
+# writing output
+expected_results_file_only_doc_ids          = expected_results_file.replace('.csv','_only_doc_ids.csv')
+
 expected_results_file_absolute              = current_file_location+'/'+expected_results_file
 processed_queries_file_absolute             = current_file_location+'/'+processed_queries_file
-expected_results_file_only_doc_ids          = expected_results_file.replace('.csv','_only_doc_ids.csv')
-expected_results_file_absolute_only_doc_ids = current_file_location+'/'+expected_results_file_only_doc_ids
+expected_results_file_only_doc_ids_absolute = current_file_location+'/'+expected_results_file_only_doc_ids
 
 w_expected_results                          = csv.writer(open(expected_results_file_absolute,"w"),delimiter=";")
 w_processed_queries                         = csv.writer(open(processed_queries_file_absolute,"w"),delimiter=";")
-w_expected_results_only_doc_ids             = csv.writer(open(expected_results_file_absolute_only_doc_ids,"w"),delimiter=";")
+w_expected_results_only_doc_ids             = csv.writer(open(expected_results_file_only_doc_ids_absolute,"w"),delimiter=";")
 
 
 for key,val in queries_dict.iteritems():
