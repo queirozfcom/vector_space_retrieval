@@ -1,8 +1,8 @@
 from __future__ import division
 from toolz.dicttoolz import keymap, valmap
-from vsm.common.classes import MultiOrderedDict
-from vsm.common.helpers.dom import get_contents,get_num
-from vsm.common.helpers.index import build_inverted_index,get_tokens
+from vsr.common.classes import MultiOrderedDict
+from vsr.common.helpers.dom import get_contents,get_num
+from vsr.common.helpers.index import build_inverted_index,get_tokens
 from xml.dom import minidom
 
 import ConfigParser
@@ -13,7 +13,7 @@ import nltk
 
 current_file_location = os.path.dirname(os.path.realpath(__file__))
 
-log_file          = '../../logs/vsm.log'
+log_file          = '../../logs/vsr.log'
 config_file       = 'gli.cfg'
 
 FORMAT='%(asctime)s %(levelname)s: %(message)s'

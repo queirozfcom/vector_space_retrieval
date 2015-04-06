@@ -1,6 +1,6 @@
 from __future__ import division
 from nltk.tokenize import word_tokenize
-from vsm.common.helpers.validators import validate_positive_integer
+from vsr.common.helpers.validators import validate_positive_integer
 
 import csv
 import math

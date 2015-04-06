@@ -1,10 +1,10 @@
 from pprint import pprint
 from toolz.dicttoolz import keymap, valmap
-from vsm.common.helpers.dom import (
+from vsr.common.helpers.dom import (
 	get_query_num,
 	get_query_tokens,
 	get_results_sorted)
-from vsm.common.helpers.index import (
+from vsr.common.helpers.index import (
 	extract_tokens, 
 	load_index_from_csv_file)
 from xml.dom import minidom
@@ -16,7 +16,7 @@ import os
 
 current_file_location = os.path.dirname(os.path.realpath(__file__))
 
-log_file = '../../logs/vsm.log'
+log_file = '../../logs/vsr.log'
 FORMAT   = '%(asctime)s %(levelname)s: %(message)s'
 DATEFMT  = '%d %b %H:%M:%S'
 log.basicConfig(
@@ -80,25 +80,30 @@ for query in queries:
 		log.warning("Found badly-formed query; skipped.")
 		continue # couldn't find needed information, skip
 
-	no_of_queries_read += 1
+	no_of_queries_read     += 1
 
 	# yes, a dict with another dict inside	
-	queries_dict[query_num]    = { 'tokens': query_tokens,'results': document_hits_in_order }
+	queries_dict[query_num] = { 'tokens': query_tokens,'results': document_hits_in_order }
 	
 
 log.info('Read {0} queries from file {1}'.format(no_of_queries_read,input_file))
 
 # we can already write the expected results
-expected_results_file_absolute  = current_file_location+'/'+expected_results_file
-processed_queries_file_absolute = current_file_location+'/'+processed_queries_file
+expected_results_file_absolute              = current_file_location+'/'+expected_results_file
+processed_queries_file_absolute             = current_file_location+'/'+processed_queries_file
+expected_results_file_only_doc_ids          = expected_results_file.replace('.csv','_only_doc_ids.csv')
+expected_results_file_absolute_only_doc_ids = current_file_location+'/'+expected_results_file_only_doc_ids
 
-w_expected_results  = csv.writer(open(expected_results_file_absolute,"w"),delimiter=";")
-w_processed_queries = csv.writer(open(processed_queries_file_absolute,"w"),delimiter=";")
+w_expected_results                          = csv.writer(open(expected_results_file_absolute,"w"),delimiter=";")
+w_processed_queries                         = csv.writer(open(processed_queries_file_absolute,"w"),delimiter=";")
+w_expected_results_only_doc_ids             = csv.writer(open(expected_results_file_absolute_only_doc_ids,"w"),delimiter=";")
+
 
 for key,val in queries_dict.iteritems():
+	w_expected_results_only_doc_ids.writerow([key,map(lambda x: x[0],val['results'])])
 	w_expected_results.writerow([key,val['results']])
-	w_processed_queries.writerow([key,val['tokens']]) 
-
+	w_processed_queries.writerow([key,val['tokens']])
+	 
 # with open('queries.out', 'wt') as out:
 #     pprint(queries_dict, stream=out,width = 9999)
 

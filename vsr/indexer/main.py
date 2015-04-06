@@ -1,5 +1,5 @@
 from __future__ import division
-from vsm.common.helpers.index import (
+from vsr.common.helpers.index import (
 	build_document_term_matrix,
 	build_term_vector,
 	load_index_from_csv_file)
@@ -13,7 +13,7 @@ import nltk
 
 current_file_location = os.path.dirname(os.path.realpath(__file__))
 
-log_file = '../../logs/vsm.log'
+log_file = '../../logs/vsr.log'
 config_file = 'index.cfg'
 
 FORMAT='%(asctime)s %(levelname)s: %(message)s'
