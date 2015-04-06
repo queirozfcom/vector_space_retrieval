@@ -5,6 +5,7 @@ from vsr.common.helpers.index import (
 	load_index_from_csv_file)
 
 import ConfigParser
+import cPickle as pickle
 import csv
 import logging as log
 import os,sys
@@ -50,6 +51,11 @@ document_term_matrix = build_document_term_matrix(
 	weighting_function = weighting_function,
 	min_token_length = min_token_length,
 	only_letters = restrict_to_letters )
+
+
+# for debugging purposes
+pickle_dump_file = current_file_location+'/'+'document_term_dict_pickle_dump.out'
+pickle.dump(document_term_matrix,open(pickle_dump_file,"wb"))
 
 output_file_absolute = current_file_location+'/'+output_file
 

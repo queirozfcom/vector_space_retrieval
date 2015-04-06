@@ -6,6 +6,7 @@ from vsr.common.helpers.index import build_inverted_index,get_tokens
 from xml.dom import minidom
 
 import ConfigParser
+import cPickle as pickle
 import csv
 import logging as log
 import os
@@ -38,6 +39,7 @@ output_files         = config.get('Steps','ESCREVA')
 # options
 min_token_length    = int(config.get('Params','TOKEN_LENGTH_THRESHOLD')[0])
 restrict_to_letters = bool(config.get('Params','ONLY_LETTERS')[0])
+ignore_stop_words   = bool(config.get('Params','IGNORE_STOP_WORDS')[0])
 
 articles             = dict()
 
@@ -66,10 +68,15 @@ for file in input_files:
 tokens = valmap(get_tokens,articles)
 
 index  = build_inverted_index(
-	tokens           = tokens,
-	count_duplicates = True,
-	min_token_length = min_token_length,
-	only_letters     = restrict_to_letters)
+	tokens            = tokens,
+	remove_stop_words = ignore_stop_words,
+	count_duplicates  = True,
+	min_token_length  = min_token_length,
+	only_letters      = restrict_to_letters)
+
+# for debugging purposes
+pickle_dump_file = current_file_location+'/'+'inverted_index_dict_pickle_dump.out'
+pickle.dump(index,open(pickle_dump_file,"wb"))
 
 for file in output_files:
 	absolute_file = current_file_location+'/'+file

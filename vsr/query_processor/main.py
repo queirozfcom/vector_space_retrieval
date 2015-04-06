@@ -9,6 +9,7 @@ from vsr.common.helpers.index import (
 from xml.dom import minidom
 
 import ConfigParser
+import cPickle as pickle
 import csv
 import logging as log
 import os
@@ -45,6 +46,7 @@ expected_results_file  = config.get('Steps','RESULTADOS')
 # options
 token_length_threshold = config.getint('Params','TOKEN_LENGTH_THRESHOLD')
 restrict_to_letters    = config.getboolean('Params','ONLY_LETTERS')
+ignore_stop_words      = config.getboolean('Params','IGNORE_STOP_WORDS')
 
 # read query XML file containing queries
 absolute_input_file    = current_file_location+'/'+input_file
@@ -68,11 +70,12 @@ no_of_queries_read           = 0
 for query in queries:
 
 	try:
-		query_num  = get_query_num(query)
-		query_tokens           = get_query_tokens(query,
-												  token_space      = global_tokens,
-												  min_token_length = token_length_threshold,
-												  only_letters     = restrict_to_letters)
+		query_num    = get_query_num(query)
+		query_tokens = get_query_tokens(query,
+						  token_space       = global_tokens,
+						  min_token_length  = token_length_threshold,
+					      only_letters      = restrict_to_letters,
+					      ignore_stop_words = ignore_stop_words)
 
 		document_hits_in_order = get_results_sorted(query)
 	except RuntimeError:
@@ -87,6 +90,11 @@ for query in queries:
 
 log.info('Read {0} queries from file {1}'.format(no_of_queries_read,input_file))
 
+
+# for debugging purposes
+pickle_dump_file = current_file_location+'/'+'processed_queries_dict_pickle_dump.out'
+pickle.dump(queries_dict,open(pickle_dump_file,"wb"))
+
 # writing output
 expected_results_file_only_doc_ids          = expected_results_file.replace('.csv','_only_doc_ids.csv')
 
@@ -97,7 +105,6 @@ expected_results_file_only_doc_ids_absolute = current_file_location+'/'+expected
 w_expected_results                          = csv.writer(open(expected_results_file_absolute,"w"),delimiter=";")
 w_processed_queries                         = csv.writer(open(processed_queries_file_absolute,"w"),delimiter=";")
 w_expected_results_only_doc_ids             = csv.writer(open(expected_results_file_only_doc_ids_absolute,"w"),delimiter=";")
-
 
 for key,val in queries_dict.iteritems():
 	w_expected_results_only_doc_ids.writerow([key,map(lambda x: x[0],val['results'])])

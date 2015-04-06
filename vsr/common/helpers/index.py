@@ -1,5 +1,6 @@
 from __future__ import division
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 from vsr.common.helpers.validators import validate_positive_integer
 
 import csv
@@ -11,7 +12,7 @@ import sys
 # Returns an inverted index (a dict where keys are terms and values are document identifiers)
 #   from a token list. The token list should be a dict where keys are document identifiers and 
 #   values are the list of tokens present in that document
-def build_inverted_index(tokens,count_duplicates=False, min_token_length=2, only_letters = True):
+def build_inverted_index(tokens,count_duplicates=False, min_token_length=2, only_letters = True, remove_stop_words = True):
     index = dict()
     for key,token_list in tokens.iteritems():
         
@@ -26,6 +27,14 @@ def build_inverted_index(tokens,count_duplicates=False, min_token_length=2, only
 
             if len(token_upper) < min_token_length:
                 continue
+
+            if remove_stop_words:
+                stop = stopwords.words('english')
+                # a few extra stopwords for us
+                stop += set(('medical','however','diagnosis','fibrosis','used','cystic','observed','patient','patients','per','disease','diseases','cf')) 
+                if token_upper.lower() in stop:
+                    continue
+
             # optimizations end
 
 
