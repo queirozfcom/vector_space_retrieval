@@ -56,7 +56,7 @@ Since the project is structured as *python modules*, please use the `-m` modifie
 In other words:
 
  - `vector_space_retrieval$ python -m vsr.inverted_index.main` - for module **inverted_index**
- - `vector_space_retrieval$ python -m vsr.index.main` - for module **indexer**
+ - `vector_space_retrieval$ python -m vsr.indexer.main` - for module **indexer**
  - `vector_space_retrieval$ python -m vsr.query_processor.main` - for module **query_processor**
  - `vector_space_retrieval$ python -m vsr.search.main` - for module **search**
 
