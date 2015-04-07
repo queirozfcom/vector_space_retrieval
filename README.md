@@ -46,7 +46,7 @@ This project was built using Python version 2.7, on Ubuntu 14.04. The following 
  - nltk
  - toolz
 
- > Look at [Getting Started with Python NLTk on Ubuntu](http://queirozf.com/entries/getting-started-with-python-nltk-on-ubuntu) for more info on how to install these.
+> Look at [Getting Started with Python NLTk on Ubuntu](http://queirozf.com/entries/getting-started-with-python-nltk-on-ubuntu) for more info on how to install these.
 
 ## Running the scripts
 
