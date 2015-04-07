@@ -119,7 +119,7 @@ for query_id,query_vector in queries_dict.iteritems():
        if(float(distance) == 1.0):
            continue
                        
-       position_doc_distance_triples.append([position,doc_id,distance])
+       position_doc_distance_triples.append([position,doc_id,round(distance,3)])
 
     # highest score first so we can compare more easily with the expect results
     sorted_doc_distance_pairs     = sorted(position_doc_distance_triples,key = lambda elem: elem[0]) 
@@ -131,14 +131,5 @@ for query_id,query_vector in queries_dict.iteritems():
     w_actual_results_doc_ids_only.writerow([query_id,map(lambda lst: lst[1], position_doc_distance_triples)])
 
 
-# with open('vecs.out', 'wt') as out:
-#     np.set_printoptions(threshold=np.inf)
-#     pprint(npvector1, stream=out,width = 9999)
-#     pprint(npvector2, stream=out,width = 9999)
-
-
 log.info("Finished module execution: 'search'")
 
-res = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-
-print(res)
