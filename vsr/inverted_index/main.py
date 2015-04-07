@@ -33,8 +33,8 @@ config               = ConfigParser.RawConfigParser(dict_type=MultiOrderedDict)
 config.read(config_file_absolute)
 
 # files
-input_files          = config.get('Steps','LEIA')
-output_files         = config.get('Steps','ESCREVA')
+input_files          = config.get('InputFiles','LEIA')
+output_files         = config.get('OutputFiles','ESCREVA')
 
 # options
 min_token_length    = int(config.get('Params','TOKEN_LENGTH_THRESHOLD')[0])
@@ -74,7 +74,7 @@ index  = build_inverted_index(
 	min_token_length  = min_token_length,
 	only_letters      = restrict_to_letters)
 
-# for debugging purposes
+# for debugging purposes only
 pickle_dump_file = current_file_location+'/'+'inverted_index_dict_pickle_dump.out'
 pickle.dump(index,open(pickle_dump_file,"wb"))
 
@@ -87,6 +87,3 @@ for file in output_files:
 
 log.info("Finished module execution: 'inverted_index'")
 
-# res = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-
-# print(res)

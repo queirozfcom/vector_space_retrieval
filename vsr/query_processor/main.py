@@ -36,12 +36,12 @@ config                 = ConfigParser.ConfigParser()
 config.read(config_file_absolute)
 
 # input files (queries and results and the inverted index)
-input_file             = config.get('Steps','LEIA')
-inverted_index_file    = config.get('Steps','INVERTED_INDEX')
+input_file             = config.get('InputFiles','LEIA')
+inverted_index_file    = config.get('InputFiles','INVERTED_INDEX')
 
 # output files
-processed_queries_file = config.get('Steps','CONSULTAS')
-expected_results_file  = config.get('Steps','RESULTADOS')
+processed_queries_file = config.get('OutputFiles','CONSULTAS')
+expected_results_file  = config.get('OutputFiles','RESULTADOS')
 
 # options
 token_length_threshold = config.getint('Params','TOKEN_LENGTH_THRESHOLD')

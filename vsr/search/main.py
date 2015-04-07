@@ -33,16 +33,14 @@ config                       = ConfigParser.ConfigParser()
 config.read(config_file_absolute)
 
 # input files (queries and documents modelled in the same space)
-document_model_file          = config.get('Steps','MODELO')
-query_model_file             = config.get('Steps','CONSULTAS')
+document_model_file          = config.get('InputFiles','MODELO')
+query_model_file             = config.get('InputFiles','CONSULTAS')
 
 # output files
-actual_results_file          = config.get('Steps','RESULTADOS')
+actual_results_file          = config.get('OutputFiles','RESULTADOS')
 
 document_model_file_absolute = current_file_location+'/'+document_model_file
 query_model_file_absolute    = current_file_location+'/'+query_model_file
-
-
 
 
 # LOAD QUERY MODEL INTO MEMORY
@@ -63,7 +61,6 @@ with open(query_model_file_absolute, 'rb') as csvfile:
 # LOAD DOCUMENT MODEL INTO MEMORY
 
 docs_dict                    = dict()
-
 
 
 with open(document_model_file_absolute , 'rb') as csvfile:

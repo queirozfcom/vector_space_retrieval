@@ -33,8 +33,8 @@ config = ConfigParser.ConfigParser()
 config.read(config_file_absolute)
 
 # files
-input_file          = config.get('Steps','LEIA')
-output_file         = config.get('Steps','ESCREVA')
+input_file          = config.get('InputFiles','LEIA')
+output_file         = config.get('OutputFiles','ESCREVA')
 
 # options
 weighting_function  = config.get('Params','WEIGHT_FUNCTION')
