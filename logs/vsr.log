@@ -1,0 +1,52 @@
+06 Apr 23:07:45 INFO: Started module execution: 'inverted_index'
+06 Apr 23:07:46 WARNING: Found article with no contents (36); skipped.
+06 Apr 23:07:46 WARNING: Found article with no contents (38); skipped.
+06 Apr 23:07:46 WARNING: Found article with no contents (128); skipped.
+06 Apr 23:07:46 WARNING: Found article with no contents (129); skipped.
+06 Apr 23:07:46 WARNING: Found article with no contents (132); skipped.
+06 Apr 23:07:46 INFO: Read 162 articles from file ../data/cf74.xml
+06 Apr 23:07:46 WARNING: Found article with no contents (168); skipped.
+06 Apr 23:07:46 WARNING: Found article with no contents (169); skipped.
+06 Apr 23:07:46 WARNING: Found article with no contents (298); skipped.
+06 Apr 23:07:46 WARNING: Found article with no contents (329); skipped.
+06 Apr 23:07:46 INFO: Read 184 articles from file ../data/cf75.xml
+06 Apr 23:07:48 WARNING: Found article with no contents (493); skipped.
+06 Apr 23:07:48 WARNING: Found article with no contents (512); skipped.
+06 Apr 23:07:48 WARNING: Found article with no contents (551); skipped.
+06 Apr 23:07:48 INFO: Read 224 articles from file ../data/cf76.xml
+06 Apr 23:07:48 WARNING: Found article with no contents (595); skipped.
+06 Apr 23:07:48 WARNING: Found article with no contents (712); skipped.
+06 Apr 23:07:48 WARNING: Found article with no contents (729); skipped.
+06 Apr 23:07:48 WARNING: Found article with no contents (735); skipped.
+06 Apr 23:07:48 WARNING: Found article with no contents (736); skipped.
+06 Apr 23:07:48 INFO: Read 194 articles from file ../data/cf77.xml
+06 Apr 23:07:49 WARNING: Found article with no contents (839); skipped.
+06 Apr 23:07:49 WARNING: Found article with no contents (840); skipped.
+06 Apr 23:07:49 WARNING: Found article with no contents (894); skipped.
+06 Apr 23:07:49 WARNING: Found article with no contents (895); skipped.
+06 Apr 23:07:49 WARNING: Found article with no contents (932); skipped.
+06 Apr 23:07:49 WARNING: Found article with no contents (939); skipped.
+06 Apr 23:07:49 INFO: Read 193 articles from file ../data/cf78.xml
+06 Apr 23:07:50 WARNING: Found article with no contents (1023); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1069); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1070); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1089); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1150); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1151); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1154); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1187); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1188); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1225); skipped.
+06 Apr 23:07:50 WARNING: Found article with no contents (1226); skipped.
+06 Apr 23:07:50 INFO: Read 248 articles from file ../data/cf79.xml
+06 Apr 23:08:00 INFO: Finished module execution: 'inverted_index'
+06 Apr 23:08:51 INFO: Started module execution: 'indexer'
+06 Apr 23:09:45 INFO: Started module execution: 'indexer'
+06 Apr 23:10:05 INFO: Finished module execution: 'indexer'
+06 Apr 23:10:23 INFO: Started module execution: 'indexer'
+06 Apr 23:10:42 INFO: Finished module execution: 'indexer'
+06 Apr 23:12:25 INFO: Started module execution: 'query_processor'
+06 Apr 23:12:26 INFO: Read 99 queries from file ../data/cfquery.xml
+06 Apr 23:12:27 INFO: Finished module execution: 'query_processor'
+06 Apr 23:12:56 INFO: Started module execution: 'search'
+06 Apr 23:13:08 INFO: Finished module execution: 'search'
