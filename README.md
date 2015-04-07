@@ -19,9 +19,11 @@ The output from this module is saved at `vsr/inverted_index/output.csv`
 
 - **INDEXER**
 
-This module uses the inverted index built in the previous module and creates a *document-term matrix*.
+ This module uses the inverted index built in the previous module and creates a *document-term matrix*.
 
-It is saved in `vsr/indexer/output.csv`
+ It is saved in `vsr/indexer/output.csv`
+
+ Additionaly, a file named `vsr/indexer/modelo.txt` is included, with specific instructions (in Portuguese) on how to read file `output.csv`.
 
 
 - **QUERY_PROCESSOR**
