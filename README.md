@@ -52,7 +52,8 @@ This project was built using Python version 2.7, on Ubuntu 14.04. The following 
 
 > The scripts should be run in this order!
 
-Since the project is structure as python *modules*, please use the `-m` modifier when running them. In other words:
+Since the project is structured as *python modules*, please use the `-m` modifier when running them. 
+In other words:
 
  - `vector_space_retrieval$ python -m vsr.inverted_index.main` - for module **inverted_index**
  - `vector_space_retrieval$ python -m vsr.index.main` - for module **indexer**
