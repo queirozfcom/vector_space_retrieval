@@ -1,4 +1,5 @@
 from __future__ import division
+from collections import OrderedDict
 from toolz.dicttoolz import keymap, valmap
 from vsr.common.classes import MultiOrderedDict
 from vsr.common.helpers.dom import get_contents,get_num
@@ -41,7 +42,7 @@ min_token_length    = int(config.get('Params','TOKEN_LENGTH_THRESHOLD')[0])
 restrict_to_letters = bool(config.get('Params','ONLY_LETTERS')[0])
 ignore_stop_words   = bool(config.get('Params','IGNORE_STOP_WORDS')[0])
 
-articles             = dict()
+articles             = OrderedDict()
 
 for file in input_files:
 	absolute_file       = current_file_location+'/'+file

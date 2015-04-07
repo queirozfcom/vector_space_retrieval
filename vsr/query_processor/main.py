@@ -1,4 +1,5 @@
 from pprint import pprint
+from collections import OrderedDict
 from vsr.common.helpers.dom import (
 	get_query_num,
 	get_query_tokens,
@@ -63,7 +64,7 @@ global_tokens                = extract_tokens(inverted_index)
  
 # queries will first be placed here, in order to be processed
 # query_num => { 'tokens' => list_of_tokens, 'results'=> list_of_document_ids }
-queries_dict                 = dict()
+queries_dict                 = OrderedDict()
 
 no_of_queries_read           = 0
 
@@ -84,8 +85,11 @@ for query in queries:
 
 	no_of_queries_read     += 1
 
-	# yes, a dict with another dict inside	
-	queries_dict[query_num] = { 'tokens': query_tokens,'results': document_hits_in_order }
+	# yes, a dict with another dict inside
+	inside_dict = OrderedDict()
+	inside_dict['tokens'] = query_tokens
+	inside_dict['results'] = document_hits_in_order	
+	queries_dict[query_num] = inside_dict
 	
 
 log.info('Read {0} queries from file {1}'.format(no_of_queries_read,input_file))

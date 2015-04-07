@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from pprint import pprint
 from scipy import spatial
 from vsr.common.helpers.similarity import(
@@ -45,7 +46,7 @@ query_model_file_absolute    = current_file_location+'/'+query_model_file
 
 # LOAD QUERY MODEL INTO MEMORY
 
-queries_dict                 = dict()
+queries_dict                 = OrderedDict()
 
 with open(query_model_file_absolute, 'rb') as csvfile:
     reader = csv.reader(csvfile,delimiter=';')
@@ -60,7 +61,7 @@ with open(query_model_file_absolute, 'rb') as csvfile:
 
 # LOAD DOCUMENT MODEL INTO MEMORY
 
-docs_dict                    = dict()
+docs_dict                    = OrderedDict()
 
 
 with open(document_model_file_absolute , 'rb') as csvfile:
@@ -76,7 +77,7 @@ with open(document_model_file_absolute , 'rb') as csvfile:
 
 # WORK OUT RESULTS
 
-results_dict                              = dict()
+results_dict                              = OrderedDict()
 
 actual_results_file_absolute              = current_file_location + '/' + actual_results_file 
 

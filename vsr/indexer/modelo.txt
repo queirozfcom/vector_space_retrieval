@@ -1,0 +1,21 @@
+O modelo (arquivo "./output.csv") consiste em 1205 linhas de dados e representa a matriz documento-termo.
+Cada linha contém um identificador de documento e 8916 números reais variando de 0.0 a 1.0.
+
+Cada linha é do formato
+
+ID_DOCUMENTO;[PESO_TERMO_1,PESO_TERMO_2,PESO_TERMO_3...PESO_TERMO_8916]
+
+Onde "ID_DOCUMENTO" é o identificador de um documento e cada um dos termos a seguir representa o "peso" de um termo no documento cujo identificador é ID_DOCUMENTO. O peso foi calculado com a fórmula 'TF-IDF'.
+
+
+O termo TF-IDF(t,d) é igual a TF(t,d) * IDF(d).
+
+
+O código que gera este modelo pode ser facilmente analisado; é a função "build_document_term_matrix", localizada no arquivo "vsr/common/helpers/index.py":
+
+
+
+- O termo TF(t,d) é o número de vezes que o termo t aparece no documento d. (linha 83)
+
+- O termo IDF(t) foi definido como log(N/D(t)), onde N é o número total de documentos na coleção e D(t) é o número de documentos que contém o termo t. Esta definição pode ser vista à linha 145 do arquivo mencionado, na função "_get_inverse_document_frequencies", que retorna um dicionário onde as chaves são termos (t) e os valores são o IDF(t).
+

@@ -1,4 +1,5 @@
 from __future__ import division
+from collections import OrderedDict
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from vsr.common.helpers.validators import validate_positive_integer
@@ -13,7 +14,7 @@ import sys
 #   from a token list. The token list should be a dict where keys are document identifiers and 
 #   values are the list of tokens present in that document
 def build_inverted_index(tokens,count_duplicates=False, min_token_length=2, only_letters = True, remove_stop_words = True):
-    index = dict()
+    index = OrderedDict()
     for key,token_list in tokens.iteritems():
         
         token_list_upper = map(lambda x: x.upper(), token_list)
@@ -61,8 +62,10 @@ def build_document_term_matrix(inverted_index, weighting_function, min_token_len
 
     validate_positive_integer(min_token_length)    
 
+    # list of strings
     term_list = build_term_vector(inverted_index, weighting_function, min_token_length, only_letters)
 
+    # list of ints
     document_id_list = _get_identifier_list(inverted_index)
 
     total_number_of_documents = len(document_id_list)
@@ -70,7 +73,7 @@ def build_document_term_matrix(inverted_index, weighting_function, min_token_len
     inverse_doc_frequencies = _get_inverse_document_frequencies(total_number_of_documents, inverted_index)    
 
     # finished gathering the pieces, now for the actual matrix
-    matrix = dict()
+    matrix = OrderedDict()
 
     for document_id in document_id_list:
 
@@ -109,7 +112,7 @@ def build_term_vector(inverted_index, weighting_function, min_token_length, only
     return(term_vector)
 
 def load_index_from_csv_file(absolute_path_to_file):
-    inverted_index = dict()
+    inverted_index = OrderedDict()
 
     with open(absolute_path_to_file,'rb') as csvfile:
         reader = csv.reader(csvfile,delimiter=';')
@@ -141,9 +144,10 @@ def _get_identifier_list(inverted_index):
 # Return a dict where keys are terms and values are the inverse document
 #   frequency (IDF) for that term in the documents in inverted_index
 def _get_inverse_document_frequencies(n,inverted_index):
-    inverse_document_frequencies = dict()
+    inverse_document_frequencies = OrderedDict()
 
     for term,hits in inverted_index.iteritems():
+        # use set to remove duplicate documents
         doc_count = len(set(hits))
         inverse_document_frequencies[term] = math.log(n/doc_count)
 

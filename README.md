@@ -5,17 +5,17 @@ Simple implementation of an Information Retrieval (IR) System based upon the vec
 
 ## Project Structure
 
-This is a python project. It is split among 4 modules: `inverted_index`, `indexer`, `query_processor` and `search`.
+ This is a python project. It is split among 4 modules: `inverted_index`, `indexer`, `query_processor` and `search`.
 
-XML files representing articles and journal entries on **Cystic Fibrosis** can be found under `vsr/data`.
+ XML files representing articles and journal entries on **Cystic Fibrosis** can be found under `vsr/data`.
 
 - **INVERTED_INDEX**
 
-This module builds an *inverted index* based upon the XML files containing article data.
+ This module builds an *inverted index* based upon the XML files containing article data.
 
-These XML files are parsed, tokenized and used to build an inverted index. The inverted index is then used to build a **document-term matrix**, linking every document to the list of tokens found in that document.
+ These XML files are parsed, tokenized and used to build an inverted index. The inverted index is then used to build a **document-term matrix**, linking every document to the list of tokens found in that document.
 
-The output from this module is saved at `vsr/inverted_index/output.csv`
+ The output from this module is saved at `vsr/inverted_index/output.csv`
 
 - **INDEXER**
 
@@ -23,18 +23,18 @@ The output from this module is saved at `vsr/inverted_index/output.csv`
 
  It is saved in `vsr/indexer/output.csv`
 
- Additionaly, a file named `vsr/indexer/modelo.txt` is included, with specific instructions (in Portuguese) on how to read file `output.csv`.
+ Additionaly, a file in `vsr/indexer/modelo.txt` is included, with specific instructions (in Portuguese) on how to read file `output.csv`.
 
 
 - **QUERY_PROCESSOR**
 
-Akin to the previous module, this module creates another *document-term matrix*, but uses queries rather than documents. Additionaly, the expected results are also formated in CSV format to enable future comparison.
+ Akin to the previous module, this module creates another *document-term matrix*, but uses queries rather than documents. Additionaly, the expected results are also formated in CSV format to enable future comparison.
 
-Output files: `vsr/query_processor/expected_query_results.csv` and `vsr/query_processor/queries.csv`.
+ Output files: `vsr/query_processor/expected_query_results.csv` and `vsr/query_processor/queries.csv`.
 
 - **SEARCH**
 
-This module uses as input the files generated in the two previous modules, as well as an XML file that contains a list of queries with *expected results*. This module runs the quries against the documents and saves the output in these two files (they have the same data, but the second file is easier to read):
+ This module uses as input the files generated in the two previous modules, as well as an XML file that contains a list of queries with *expected results*. This module runs the quries against the documents and saves the output in these two files (they have the same data, but the second file is easier to read):
  - `vsr/search/actual_results.csv`
  - `vsr/search/actual_results_only_doc_ids.csv`
 
