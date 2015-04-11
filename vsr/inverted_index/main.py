@@ -81,10 +81,12 @@ pickle.dump(index,open(pickle_dump_file,"wb"))
 
 for file in output_files:
 	absolute_file = current_file_location+'/'+file
-	w             = csv.writer(open(absolute_file,"w"),delimiter=";")
+	
+	with(open(absolute_file,"w")) as outfile:
+		w = csv.writer(outfile,delimiter=';')
 
-	for key,val in index.iteritems():
-		w.writerow([key,val])
+		for key,val in index.iteritems():
+			w.writerow([key,val])
 
 log.info("Finished module execution: 'inverted_index'")
 

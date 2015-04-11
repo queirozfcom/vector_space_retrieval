@@ -55,9 +55,10 @@ pickle.dump(document_term_matrix,open(pickle_dump_file,"wb"))
 
 output_file_absolute = current_file_location+'/'+output_file
 
-w = csv.writer(open(output_file_absolute,"w"),delimiter=";")
+with open(output_file_absolute,"w") as outfile:
+	w = csv.writer(outfile, delimiter=";")
 
-for key,val in document_term_matrix.iteritems():
-	w.writerow([key,val])
+	for key,val in document_term_matrix.iteritems():
+		w.writerow([key,val])
 
 log.info("Finished module execution: 'indexer'")

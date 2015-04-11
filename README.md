@@ -52,6 +52,12 @@ This project was built using Python version 2.7, on Ubuntu 14.04. The following 
 
 ## Running the scripts
 
+### Run all scripts together
+
+Just run `vector_space_retrieval$ python -m vsr.main` - this is a special module that just runs the other modules in the correct order.
+
+### Run each script separately
+
 > The scripts should be run in this order!
 
 Since the project is structured as *python modules*, please use the `-m` modifier when running them. 

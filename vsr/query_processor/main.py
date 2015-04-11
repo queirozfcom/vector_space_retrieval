@@ -94,23 +94,25 @@ pickle_dump_file = current_file_location+'/'+'processed_queries_dict_pickle_dump
 pickle.dump(queries_dict,open(pickle_dump_file,"wb"))
 
 # writing output
-expected_results_file_only_doc_ids          = expected_results_file.replace('.csv','_only_doc_ids.csv')
+expected_results_file_only_doc_ids = expected_results_file.replace('.csv','_only_doc_ids.csv')
 
-expected_results_file_absolute              = current_file_location+'/'+expected_results_file
-processed_queries_file_absolute             = current_file_location+'/'+processed_queries_file
-expected_results_file_only_doc_ids_absolute = current_file_location+'/'+expected_results_file_only_doc_ids
+expected_results                   = open(current_file_location+'/'+expected_results_file,'w')
+processed_queries                  = open(current_file_location+'/'+processed_queries_file,'w')
+expected_results_only_doc_ids      = open(current_file_location+'/'+expected_results_file_only_doc_ids,'w')
 
-w_expected_results                          = csv.writer(open(expected_results_file_absolute,"w"),delimiter=";")
-w_processed_queries                         = csv.writer(open(processed_queries_file_absolute,"w"),delimiter=";")
-w_expected_results_only_doc_ids             = csv.writer(open(expected_results_file_only_doc_ids_absolute,"w"),delimiter=";")
+w_expected_results                          = csv.writer(expected_results,delimiter=";")
+w_processed_queries                         = csv.writer(processed_queries,delimiter=";")
+w_expected_results_only_doc_ids             = csv.writer(expected_results_only_doc_ids,delimiter=";")
 
 for key,val in queries_dict.iteritems():
 	w_expected_results_only_doc_ids.writerow([key,map(lambda x: x[0],val['results'])])
 	w_expected_results.writerow([key,val['results']])
 	w_processed_queries.writerow([key,val['tokens']])
 	 
-# with open('queries.out', 'wt') as out:
-#     pprint(queries_dict, stream=out,width = 9999)
+# must close these explicitly because i'm not using the 'with file as outfile' construct	 
+expected_results.close()
+processed_queries.close()
+expected_results_only_doc_ids.close()	 
 
 log.info("Finished module execution: 'query_processor'")
 

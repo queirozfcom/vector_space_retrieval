@@ -119,8 +119,14 @@ def load_index_from_csv_file(absolute_path_to_file):
 
         for row in reader:
             token = row[0].strip()
-            document_occurrences = map(lambda str: int(str),
-                row[1].lstrip('[').rstrip(']').strip().split(','))
+
+            try:
+
+                document_occurrences = map(lambda str: int(str), row[1].lstrip('[').rstrip(']').split(','))
+
+            except IndexError:
+                print(row)
+                sys.exit()
 
             inverted_index[token] = document_occurrences
 
