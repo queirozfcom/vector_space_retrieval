@@ -1,9 +1,7 @@
 from __future__ import division
 from collections import OrderedDict
-from toolz.dicttoolz import keymap, valmap
 from vsr.common.classes import MultiOrderedDict
-from vsr.common.helpers.dom import get_contents,get_num
-from vsr.common.helpers.index import build_inverted_index,get_tokens
+from vsr.common.helpers import dom,index
 from xml.dom import minidom
 
 import ConfigParser
@@ -12,6 +10,8 @@ import csv
 import logging as log
 import os
 import nltk
+import toolz.dicttoolz as dt
+
 
 current_file_location = os.path.dirname(os.path.realpath(__file__))
 
@@ -38,9 +38,9 @@ input_files          = config.get('InputFiles','LEIA')
 output_files         = config.get('OutputFiles','ESCREVA')
 
 # options
-min_token_length    = int(config.get('Params','TOKEN_LENGTH_THRESHOLD')[0])
-restrict_to_letters = bool(config.get('Params','ONLY_LETTERS')[0])
-ignore_stop_words   = bool(config.get('Params','IGNORE_STOP_WORDS')[0])
+min_token_length     = int(config.get('Params','TOKEN_LENGTH_THRESHOLD')[0])
+restrict_to_letters  = bool(config.get('Params','ONLY_LETTERS')[0])
+ignore_stop_words    = bool(config.get('Params','IGNORE_STOP_WORDS')[0])
 
 articles             = OrderedDict()
 
@@ -54,9 +54,9 @@ for file in input_files:
 
 	for record in records:
 
-		record_num = get_num(record)
+		record_num = dom.get_num(record)
 		try:
-			contents = get_contents(record)
+			contents = dom.get_contents(record)
 		except RuntimeError:
 			log.warning("Found article with no contents ({0}); skipped.".format(record_num))
 			continue # couldn't find article contents, skip
@@ -66,9 +66,9 @@ for file in input_files:
 		
 	log.info('Read {0} articles from file {1}'.format(no_of_articles_read,file))
 
-tokens = valmap(get_tokens,articles)
+tokens = dt.valmap(index.get_tokens,articles)
 
-index  = build_inverted_index(
+index  = index.build_inverted_index(
 	tokens            = tokens,
 	remove_stop_words = ignore_stop_words,
 	count_duplicates  = True,

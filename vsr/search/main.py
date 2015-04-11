@@ -1,9 +1,6 @@
 from collections import OrderedDict
 from pprint import pprint
-from scipy import spatial
-from vsr.common.helpers.similarity import(
-    get_position,
-    cosine_distance)
+from vsr.common.helpers import similarity
 from xml.dom import minidom
 
 import ConfigParser
@@ -98,7 +95,7 @@ for query_id,query_vector in queries_dict.iteritems():
 
     for doc_id,doc_vector in docs_dict.iteritems():
 
-        distance   = cosine_distance(query_vector,doc_vector)
+        distance   = similarity.cosine_distance(query_vector,doc_vector)
         doc_distance_pairs.append([doc_id,distance])      
 
     # this is the way data will be written to the csv file    

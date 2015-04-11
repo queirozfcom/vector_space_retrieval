@@ -1,12 +1,6 @@
 from pprint import pprint
 from collections import OrderedDict
-from vsr.common.helpers.dom import (
-	get_query_num,
-	get_query_tokens,
-	get_results_sorted)
-from vsr.common.helpers.index import (
-	extract_tokens, 
-	load_index_from_csv_file)
+from vsr.common.helpers import dom,index
 from xml.dom import minidom
 
 import ConfigParser
@@ -59,8 +53,8 @@ queries                = xmldoc.getElementsByTagName("QUERY")
 # the documents went through (and include all tokens ever found in all documents)
 inverted_index_file_absolute = current_file_location+'/'+inverted_index_file
 
-inverted_index               = load_index_from_csv_file(inverted_index_file_absolute)
-global_tokens                = extract_tokens(inverted_index) 
+inverted_index               = index.load_index_from_csv_file(inverted_index_file_absolute)
+global_tokens                = index.extract_tokens(inverted_index) 
  
 # queries will first be placed here, in order to be processed
 # query_num => { 'tokens' => list_of_tokens, 'results'=> list_of_document_ids }
@@ -71,14 +65,14 @@ no_of_queries_read           = 0
 for query in queries:
 
 	try:
-		query_num    = get_query_num(query)
-		query_tokens = get_query_tokens(query,
+		query_num     = dom.get_query_num(query)
+		query_tokens  = dom.get_query_tokens(query,
 						  token_space       = global_tokens,
 						  min_token_length  = token_length_threshold,
 					      only_letters      = restrict_to_letters,
 					      ignore_stop_words = ignore_stop_words)
 
-		document_hits_in_order = get_results_sorted(query)
+		hits_in_order = dom.get_results_sorted(query)
 	except RuntimeError:
 		log.warning("Found badly-formed query; skipped.")
 		continue # couldn't find needed information, skip
@@ -88,7 +82,7 @@ for query in queries:
 	# yes, a dict with another dict inside
 	inside_dict = OrderedDict()
 	inside_dict['tokens'] = query_tokens
-	inside_dict['results'] = document_hits_in_order	
+	inside_dict['results'] = hits_in_order	
 	queries_dict[query_num] = inside_dict
 	
 

@@ -2,7 +2,7 @@ from __future__ import division
 from collections import OrderedDict
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from vsr.common.helpers.validators import validate_positive_integer
+from vsr.common.helpers import validators
 
 import csv
 import math
@@ -60,7 +60,7 @@ def build_document_term_matrix(inverted_index, weighting_function, min_token_len
     if weighting_function not in ['tf-idf']:
         raise ValueError("Invalid weighting function. Available values are {0}".format(supported_weighting_functions))
 
-    validate_positive_integer(min_token_length)    
+    validators.validate_positive_integer(min_token_length)    
 
     # list of strings
     term_list = build_term_vector(inverted_index, weighting_function, min_token_length, only_letters)

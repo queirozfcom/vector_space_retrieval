@@ -1,8 +1,5 @@
 from __future__ import division
-from vsr.common.helpers.index import (
-	build_document_term_matrix,
-	build_term_vector,
-	load_index_from_csv_file)
+from vsr.common.helpers import index
 
 import ConfigParser
 import cPickle as pickle
@@ -28,33 +25,32 @@ log.basicConfig(
 log.info("Started module execution: 'indexer'")
 
 config_file_absolute = current_file_location+'/'+config_file
-
-config = ConfigParser.ConfigParser()
+config               = ConfigParser.ConfigParser()
 config.read(config_file_absolute)
 
 # files
-input_file          = config.get('InputFiles','LEIA')
-output_file         = config.get('OutputFiles','ESCREVA')
+input_file           = config.get('InputFiles','LEIA')
+output_file          = config.get('OutputFiles','ESCREVA')
 
 # options
-weighting_function  = config.get('Params','WEIGHT_FUNCTION')
-min_token_length    = config.getint('Params','TOKEN_LENGTH_THRESHOLD')
-restrict_to_letters = config.getboolean('Params','ONLY_LETTERS')
+weighting_function   = config.get('Params','WEIGHT_FUNCTION')
+min_token_length     = config.getint('Params','TOKEN_LENGTH_THRESHOLD')
+restrict_to_letters  = config.getboolean('Params','ONLY_LETTERS')
 
 # token => list of occurrences
-input_file_absolute = current_file_location+'/'+input_file
-inverted_index = load_index_from_csv_file(input_file_absolute)
+input_file_absolute  = current_file_location+'/'+input_file
+inverted_index       = index.load_index_from_csv_file(input_file_absolute)
 
 # document => list of token weights
-document_term_matrix = build_document_term_matrix(
+document_term_matrix = index.build_document_term_matrix(
 	inverted_index, 
 	weighting_function = weighting_function,
-	min_token_length = min_token_length,
-	only_letters = restrict_to_letters )
+	min_token_length   = min_token_length,
+	only_letters       = restrict_to_letters )
 
 
 # for debugging purposes
-pickle_dump_file = current_file_location+'/'+'document_term_dict_pickle_dump.out'
+pickle_dump_file     = current_file_location+'/'+'document_term_dict_pickle_dump.out'
 pickle.dump(document_term_matrix,open(pickle_dump_file,"wb"))
 
 output_file_absolute = current_file_location+'/'+output_file
