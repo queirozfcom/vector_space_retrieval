@@ -3,6 +3,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from xml.dom import minidom
 
+import sys
+
 def get_num(record_node):
     maybe_recordnums = record_node.getElementsByTagName("RECORDNUM")
 
@@ -84,17 +86,25 @@ def get_results_sorted(query_node):
     else:
         doc_scores = list()
         for doc_node in maybe_doc_nodes:
-            score = int(doc_node.attributes["score"].value)
-            doc_id = int(doc_node.firstChild.nodeValue)
-
+            score         = str(doc_node.attributes["score"].nodeValue)
+            doc_id        = int(doc_node.firstChild.nodeValue)
+            
             doc_scores.append([doc_id,score])
 
 
-    doc_scores_ordered = sorted(doc_scores,key = lambda elem: elem[1], reverse= True)       
+    doc_scores_ordered = sorted(doc_scores,key = lambda elem: _sum_votes(elem[1]), reverse= True)       
 
     # doc_scores_ordered = OrderedDict(sorted(doc_scores.items(),reverse=True, key = lambda elem:elem[1] ))
 
     return(doc_scores_ordered)      
+
+def _sum_votes(numeric_string):
+    sum = 0
+
+    for idx in range(len(str(numeric_string))):
+        sum += int(numeric_string[idx])
+
+    return(sum)    
 
 def _get_query_text(query_node):
     maybe_texts = query_node.getElementsByTagName("QueryText")
