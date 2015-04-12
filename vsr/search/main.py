@@ -74,15 +74,15 @@ with open(document_model_file_absolute , 'rb') as csvfile:
 
 # WORK OUT RESULTS
 
-results_dict                              = OrderedDict()
+results_dict                     = OrderedDict()
 
-actual_results_file_absolute              = current_file_location + '/' + actual_results_file 
+actual_results                   = open(current_file_location + '/' + actual_results_file,'w') 
 
-actual_results_doc_ids_only               = actual_results_file.replace('.csv','_only_doc_ids.csv')
-actual_results_file_doc_ids_only_absolute = current_file_location+'/'+actual_results_doc_ids_only
+actual_results_file_doc_ids_only = actual_results_file.replace('.csv','_only_doc_ids.csv')
+actual_results_doc_ids_only      = open(current_file_location+'/'+actual_results_file_doc_ids_only,'w')
 
-w_actual_results                          = csv.writer(open(actual_results_file_absolute,"w"),delimiter=";")
-w_actual_results_doc_ids_only             = csv.writer(open(actual_results_file_doc_ids_only_absolute,"w"),delimiter=";")
+w_actual_results                 = csv.writer(actual_results,delimiter=";")
+w_actual_results_doc_ids_only    = csv.writer(actual_results_doc_ids_only,delimiter=";")
 
 
 
@@ -125,6 +125,9 @@ for query_id,query_vector in queries_dict.iteritems():
     w_actual_results.writerow(results_row)
     w_actual_results_doc_ids_only.writerow([query_id,map(lambda lst: lst[1], position_doc_distance_triples)])
 
+# must close these explicitly because i'm not using the 'with file as outfile' construct    
+actual_results.close()
+actual_results_doc_ids_only.close()
 
 log.info("Finished module execution: 'search'")
 
