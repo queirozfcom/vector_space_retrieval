@@ -1,5 +1,5 @@
 O modelo (arquivo "./output.csv") consiste em 1205 linhas de dados e representa a matriz documento-termo.
-Cada linha contém um identificador de documento e 8916 números reais variando de 0.0 a 1.0.
+Cada linha contém um identificador de documento e 8916 números reais positivos.
 
 Cada linha é do formato
 
