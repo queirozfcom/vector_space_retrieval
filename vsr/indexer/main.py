@@ -34,8 +34,6 @@ output_file          = config.get('OutputFiles','ESCREVA')
 
 # options
 weighting_function   = config.get('Params','WEIGHT_FUNCTION')
-min_token_length     = config.getint('Params','TOKEN_LENGTH_THRESHOLD')
-restrict_to_letters  = config.getboolean('Params','ONLY_LETTERS')
 
 # token => list of occurrences
 input_file_absolute  = current_file_location+'/'+input_file
@@ -44,9 +42,7 @@ inverted_index       = index.load_index_from_csv_file(input_file_absolute)
 # document => list of token weights
 document_term_matrix = index.build_document_term_matrix(
 	inverted_index, 
-	weighting_function = weighting_function,
-	min_token_length   = min_token_length,
-	only_letters       = restrict_to_letters )
+	weighting_function = weighting_function)
 
 
 # for debugging purposes

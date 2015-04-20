@@ -3,6 +3,7 @@ from collections import OrderedDict
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from vsr.common.helpers import validators
+from vsr.vendor.PorterStemmer import PorterStemmer
 
 import csv
 import math
@@ -10,11 +11,18 @@ import pprint as pp
 import nltk
 import sys
 
+# stemmer = PorterStemmer()
+# res     = stemmer.stem("civilizations",0,12)
+# print(res)
+# sys.exit()
+
 # Returns an inverted index (a dict where keys are terms and values are document identifiers)
 #   from a token list. The token list should be a dict where keys are document identifiers and 
 #   values are the list of tokens present in that document
-def build_inverted_index(tokens,count_duplicates=False, min_token_length=2, only_letters = True, remove_stop_words = True):
-    index = OrderedDict()
+def build_inverted_index(tokens,count_duplicates=False, min_token_length=2, only_letters = True, remove_stop_words = True, use_stemmer = False):
+    index   = OrderedDict()
+    stemmer = PorterStemmer()
+
     for key,token_list in tokens.iteritems():
         
         token_list_upper = map(lambda x: x.upper(), token_list)
@@ -22,31 +30,47 @@ def build_inverted_index(tokens,count_duplicates=False, min_token_length=2, only
         for token_upper in set(token_list_upper):
 
             # optimizations start
+            # filter
             if only_letters:
                 if not token_upper.isalpha():
                     continue
-
+            # filter
             if len(token_upper) < min_token_length:
                 continue
-
+       
+            # filter
             if remove_stop_words:
-                stop = stopwords.words('english')
+                stop  = stopwords.words('english')
                 # a few extra stopwords for us
                 stop += set(('medical','however','diagnosis','fibrosis','used','cystic','observed','patient','patients','per','disease','diseases','cf')) 
                 if token_upper.lower() in stop:
                     continue
+            # map
+            if use_stemmer:
+                # must lowercase it first
+                stemmed_token_upper = stemmer.stem(token_upper.lower(),0,len(token_upper)-1).upper()
 
             # optimizations end
 
-
-            if token_upper not in index:
-                index[token_upper] = list()
-
-            if(count_duplicates):   
-                for i in range(token_list_upper.count(token_upper)):
-                    index[token_upper].append(key) # as many times as it appears                
+            if use_stemmer:
+                if stemmed_token_upper not in index:
+                    index[stemmed_token_upper] = list()
             else:
-                index[token_upper].append(key) # just once
+                if token_upper not in index:
+                    index[token_upper] = list()          
+
+            if(count_duplicates):
+                # the token in the original document is _not_ stemmed   
+                for i in range(token_list_upper.count(token_upper)):
+                    if use_stemmer:
+                        index[stemmed_token_upper].append(key) # as many times as it appears    
+                    else:
+                        index[token_upper].append(key) # as many times as it appears    
+            else:
+                if use_stemmer:
+                    index[stemmed_token_upper].append(key) # just once
+                else:    
+                    index[token_upper].append(key) # just once
 
     return(index)           
     
@@ -55,22 +79,20 @@ def get_tokens(text):
     return(word_tokenize(text))
 
 # Build a dict where the keys are document identifiers and values are term vectors.
-def build_document_term_matrix(inverted_index, weighting_function, min_token_length, only_letters):
+def build_document_term_matrix(inverted_index, weighting_function):
     
     if weighting_function not in ['tf-idf']:
         raise ValueError("Invalid weighting function. Available values are {0}".format(supported_weighting_functions))
 
-    validators.validate_positive_integer(min_token_length)    
-
     # list of strings
-    term_list = build_term_vector(inverted_index, weighting_function, min_token_length, only_letters)
+    term_list                 = build_term_vector(inverted_index)
 
     # list of ints
-    document_id_list = _get_identifier_list(inverted_index)
+    document_id_list          = _get_identifier_list(inverted_index)
 
     total_number_of_documents = len(document_id_list)
 
-    inverse_doc_frequencies = _get_inverse_document_frequencies(total_number_of_documents, inverted_index)    
+    inverse_doc_frequencies   = _get_inverse_document_frequencies(total_number_of_documents, inverted_index)    
 
     # finished gathering the pieces, now for the actual matrix
     matrix = OrderedDict()
@@ -80,8 +102,8 @@ def build_document_term_matrix(inverted_index, weighting_function, min_token_len
         term_weights = list()
 
         for term in term_list:
-            idf = inverse_doc_frequencies[term]
-            tf  = _get_raw_term_frequency(term,document_id,inverted_index)
+            idf    = inverse_doc_frequencies[term]
+            tf     = _get_raw_term_frequency(term,document_id,inverted_index)
 
             tf_idf = round(tf * idf,3)
 
@@ -91,22 +113,13 @@ def build_document_term_matrix(inverted_index, weighting_function, min_token_len
 
     return(matrix)
 
-# Extract a list of all terms (keys in the inverted index). Terms will be normalized and possibly
-#   ignored altogether depending on parameters passed
-def build_term_vector(inverted_index, weighting_function, min_token_length, only_letters):
+# Extract a list of all terms (keys in the inverted index)
+def build_term_vector(inverted_index):
     
     term_vector = list()
 
-    for raw_token in inverted_index.keys():
-        term = raw_token.upper().strip()
-
-        if len(term) < min_token_length:
-            continue
-
-        if only_letters:
-            if not term.isalpha():
-                continue
-
+    for term in inverted_index.keys():
+        assert(term == term.upper())
         term_vector.append(term)
 
     return(term_vector)

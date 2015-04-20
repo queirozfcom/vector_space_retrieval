@@ -43,10 +43,12 @@ precisions            = precision.calculate(expected_results,actual_results)
 recalls               = recall.calculate(expected_results,actual_results)
 f1_scores             = f_score.calculate(expected_results,actual_results,beta=1)
 mean_ap               = mean_ap.calculate(expected_results,actual_results)    
+precisions_at_10      = precision.calculate(expected_results,actual_results,at=10)
 
 results_helper.write_to_csv_file(precisions,output_directory+'precisions.csv')
 results_helper.write_to_csv_file(recalls,output_directory+'recalls.csv')
 results_helper.write_to_csv_file(f1_scores,output_directory+'f1_scores.csv')
+results_helper.write_to_csv_file(precisions_at_10,output_directory+'precisions_at_10.csv')
 
 # mean_ap is a single number
 with open(output_directory+'mean_ap.txt','w') as outfile:

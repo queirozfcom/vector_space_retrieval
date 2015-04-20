@@ -20,8 +20,6 @@ log.basicConfig(
 	format=FORMAT,datefmt=DATEFMT,
 	filemode='a') # append to existing file
 
-
-
 log.info("Started module execution: 'query_processor'")
 
 config_file            = 'pc.cfg'
@@ -42,6 +40,7 @@ expected_results_file  = config.get('OutputFiles','RESULTADOS')
 token_length_threshold = config.getint('Params','TOKEN_LENGTH_THRESHOLD')
 restrict_to_letters    = config.getboolean('Params','ONLY_LETTERS')
 ignore_stop_words      = config.getboolean('Params','IGNORE_STOP_WORDS')
+use_stemmer            = config.getboolean('Params','USE_STEMMER')
 
 # read query XML file containing queries
 absolute_input_file    = current_file_location+'/'+input_file
@@ -70,7 +69,8 @@ for query in queries:
 						  token_space       = global_tokens,
 						  min_token_length  = token_length_threshold,
 					      only_letters      = restrict_to_letters,
-					      ignore_stop_words = ignore_stop_words)
+					      ignore_stop_words = ignore_stop_words,
+					      use_stemmer       = use_stemmer)
 
 		hits_in_order = dom.get_results_sorted(query)
 	except RuntimeError:

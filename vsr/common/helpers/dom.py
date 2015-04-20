@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from vsr.vendor.PorterStemmer import PorterStemmer
 from xml.dom import minidom
 
 import sys
@@ -41,30 +42,37 @@ def get_query_num(query_node):
         return(int(maybe_nums[0].firstChild.nodeValue))
 
     
-def get_query_tokens(query_node, token_space, min_token_length = 2, only_letters = False, ignore_stop_words = True):
-    query_text_upper = _get_query_text(query_node).upper()
+def get_query_tokens(query_node, token_space, min_token_length = 2, only_letters = False, ignore_stop_words = True, use_stemmer = False):
+    
+    stemmer            = PorterStemmer() 
+
+    query_text_upper   = _get_query_text(query_node).upper()
 
     valid_query_tokens = list()
 
-    token_candidates = word_tokenize(query_text_upper)
+    token_candidates   = word_tokenize(query_text_upper)
 
-    for possible_token in token_candidates:
+    for possible_token_upper in token_candidates:
 
-        if len(possible_token.strip()) < min_token_length:
+        if len(possible_token_upper.strip()) < min_token_length:
             continue
 
         if ignore_stop_words:
             stop  = stopwords.words('english')
             # a few extra stopwords for us
             stop += set(('medical','however','diagnosis','fibrosis','used','cystic','observed','patient','patients','per','disease','diseases','cf')) 
-            if possible_token.lower() in stop:
+            if possible_token_upper.lower() in stop:
                 continue    
 
         if only_letters:
-            if not possible_token.strip().isalpha():
+            if not possible_token_upper.strip().isalpha():
                 continue
 
-        valid_query_tokens.append(possible_token.strip())
+        if use_stemmer:
+            possible_token_upper = stemmer.stem(possible_token_upper.lower(),0,len(possible_token_upper)-1).upper()       
+
+        valid_query_tokens.append(possible_token_upper.strip())
+
 
     term_vector = list()
 

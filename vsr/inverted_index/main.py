@@ -2,6 +2,7 @@ from __future__ import division
 from collections import OrderedDict
 from vsr.common.classes import MultiOrderedDict
 from vsr.common.helpers import dom,index
+from vsr.vendor.PorterStemmer import PorterStemmer
 from xml.dom import minidom
 
 import ConfigParser
@@ -11,7 +12,7 @@ import logging as log
 import os
 import nltk
 import toolz.dicttoolz as dt
-
+import sys
 
 current_file_location = os.path.dirname(os.path.realpath(__file__))
 
@@ -38,9 +39,11 @@ input_files          = config.get('InputFiles','LEIA')
 output_files         = config.get('OutputFiles','ESCREVA')
 
 # options
+# it's an array because we're using MultiOrderedDict
 min_token_length     = int(config.get('Params','TOKEN_LENGTH_THRESHOLD')[0])
 restrict_to_letters  = bool(config.get('Params','ONLY_LETTERS')[0])
 ignore_stop_words    = bool(config.get('Params','IGNORE_STOP_WORDS')[0])
+use_stemmer          = bool(config.get('Params','USE_STEMMER')[0])
 
 articles             = OrderedDict()
 
@@ -73,7 +76,8 @@ index  = index.build_inverted_index(
 	remove_stop_words = ignore_stop_words,
 	count_duplicates  = True,
 	min_token_length  = min_token_length,
-	only_letters      = restrict_to_letters)
+	only_letters      = restrict_to_letters,
+	use_stemmer       = use_stemmer)
 
 # for debugging purposes only
 pickle_dump_file = current_file_location+'/'+'inverted_index_dict_pickle_dump.out'

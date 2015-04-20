@@ -55,7 +55,6 @@ with open(query_model_file_absolute, 'rb') as csvfile:
 
 
 
-
 # LOAD DOCUMENT MODEL INTO MEMORY
 
 docs_dict                    = OrderedDict()
