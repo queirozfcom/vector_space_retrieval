@@ -3,7 +3,13 @@
 
 import matplotlib.pyplot as plt
 
-def plot_recall_precision_curve(recall_precision_pairs,title = 'Precision-Recall curve (11 pts)' ):
+def plot_recall_precision_curve(recall_precision_pairs,
+    title = 'Precision-Recall curve (11 pts)',
+    display = False,
+    filename = None):
+    
+    if not display:
+        assert(filename is not None)
 
     recalls    = map(lambda el: round(el[0],2), recall_precision_pairs)        
     precisions = map(lambda el: round(el[1],3), recall_precision_pairs)        
@@ -31,8 +37,11 @@ def plot_recall_precision_curve(recall_precision_pairs,title = 'Precision-Recall
     plt.ylim([0.0, 1.05])
     plt.xlim([0.0, 1.0])
     plt.legend(loc="upper right")
-    plt.show()
 
+    if(display):
+        plt.show()
+    else:
+        plt.savefig(filename)
 
 def _get_text_pos(i,j):
     
