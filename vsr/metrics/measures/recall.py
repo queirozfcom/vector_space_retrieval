@@ -7,24 +7,27 @@ import sys
 
 # takes two dicts; one containing expected results and the other containing actual results
 def calculate(expected_results, actual_results):
-	# the query identifiers must match exactly
-	assert( sorted(actual_results.keys()) == sorted(expected_results.keys()) )
+    # the query identifiers must match exactly
+    assert( sorted(actual_results.keys()) == sorted(expected_results.keys()) )
 
-	recalls = OrderedDict()
+    recalls = OrderedDict()
 
-	for query_id,expected_document_ids in expected_results.iteritems():
-		actual_document_ids    = actual_results[query_id]
+    for query_id,expected_document_ids in expected_results.iteritems():
 
-		relevant_and_retrieved = filter(lambda el: el in actual_document_ids ,expected_document_ids) 
+        actual_document_ids    = actual_results[query_id]
 
-		recall                 = len(relevant_and_retrieved) / len(expected_document_ids)
+        relevant_and_retrieved = filter(lambda el: el in expected_document_ids ,actual_document_ids) 
 
-		recalls[query_id]       = round(recall,3)
+        recall                 = len(relevant_and_retrieved) / len(expected_document_ids)
 
-	# make sure all queries have been accounted for
-	assert(sorted(actual_results.keys()) == sorted(expected_results.keys()) == sorted(recalls.keys()) )
+        recalls[query_id]      = round(recall,3)
 
-	return(recalls)
+    # make sure all queries have been accounted for
+    assert(sorted(actual_results.keys()) == sorted(expected_results.keys()) == sorted(recalls.keys()) )
+
+    return(recalls)
+
+
 
 
 

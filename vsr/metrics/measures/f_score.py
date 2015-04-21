@@ -2,6 +2,8 @@ from __future__ import division
 from collections import OrderedDict
 from vsr.metrics.measures import precision,recall
 
+import sys
+
 # the f score produces a value that weights both recall and precision. The value beta (positive real) is 
 #   the magnitude with which recall should be considered more important than precision. When beta is 1,
 #   it means that both recall and precision are given equal weights
@@ -17,8 +19,12 @@ def calculate(expected_results,actual_results,beta=1):
 		p                  = precisions[query_id]
 		r                  = recalls[query_id]
 
-		f_score            = ( (1 + pow(beta,2) ) *( p * r ) ) / ( ( pow(beta,2) * p ) + r )
-
+		try:
+			f_score            = ( (1 + pow(beta,2) ) *( p * r ) ) / ( ( pow(beta,2) * p ) + r )
+		except ZeroDivisionError:
+			continue
+			sys.exit()
+			
 		f_scores[query_id] = round(f_score,3)
 
 	return(f_scores)

@@ -2,6 +2,7 @@ from __future__ import division
 from collections import OrderedDict
 from vsr.common.classes import MultiOrderedDict
 from vsr.common.helpers import dom,index
+from vsr.common.helpers.extras import str2bool
 from vsr.vendor.PorterStemmer import PorterStemmer
 from xml.dom import minidom
 
@@ -41,9 +42,9 @@ output_files         = config.get('OutputFiles','ESCREVA')
 # options
 # it's an array because we're using MultiOrderedDict
 min_token_length     = int(config.get('Params','TOKEN_LENGTH_THRESHOLD')[0])
-restrict_to_letters  = bool(config.get('Params','ONLY_LETTERS')[0])
-ignore_stop_words    = bool(config.get('Params','IGNORE_STOP_WORDS')[0])
-use_stemmer          = bool(config.get('Params','USE_STEMMER')[0])
+restrict_to_letters  = str2bool(config.get('Params','ONLY_LETTERS')[0])
+ignore_stop_words    = str2bool(config.get('Params','IGNORE_STOP_WORDS')[0])
+use_stemmer          = str2bool(config.get('Params','USE_STEMMER')[0])
 
 articles             = OrderedDict()
 
