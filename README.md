@@ -5,7 +5,7 @@ Simple implementation of an Information Retrieval (IR) System based upon the vec
 
 ## Quick Start
 
-Clone repo and run `$ python -m vsr.main` from the repository root. Outputs are under <module_name>/output.
+Clone repo and run `$ python -m vsr.main` from the repository root. Outputs are under *module_name*/output.
 
 ## Project Structure
 
