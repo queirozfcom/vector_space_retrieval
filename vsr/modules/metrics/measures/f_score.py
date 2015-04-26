@@ -1,6 +1,6 @@
 from __future__ import division
 from collections import OrderedDict
-from vsr.metrics.measures import precision,recall
+from vsr.modules.metrics.measures import precision,recall
 
 import sys
 

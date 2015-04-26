@@ -1,8 +1,8 @@
-from vsr.inverted_index.main import run as run_inverted_index
-from vsr.indexer.main import run as run_indexer
-from vsr.query_processor.main import run as run_query_processor
-from vsr.search.main import run as run_search
-from vsr.metrics.main import run as run_metrics
+from vsr.modules.inverted_index.main import run as run_inverted_index
+from vsr.modules.indexer.main import run as run_indexer
+from vsr.modules.query_processor.main import run as run_query_processor
+from vsr.modules.search.main import run as run_search
+from vsr.modules.metrics.main import run as run_metrics
 
 import ConfigParser
 import os

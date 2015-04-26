@@ -19,7 +19,7 @@ def run(override_params = None):
 
 	current_file_location            = os.path.dirname(os.path.realpath(__file__))
 
-	log                              = logger.init_log(current_file_location+'/../../logs/vsr.log',mode='w')
+	log                              = logger.init_log(current_file_location+'/../../../logs/vsr.log',mode='w')
 	log.info("Started module execution: 'inverted_index'")
 
 	config_file                      = 'gli.cfg'

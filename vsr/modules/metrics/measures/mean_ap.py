@@ -1,5 +1,5 @@
 from __future__ import division
-from vsr.metrics.measures.precision import calculate as calculate_precision
+from vsr.modules.metrics.measures.precision import calculate as calculate_precision
 
 import sys
 

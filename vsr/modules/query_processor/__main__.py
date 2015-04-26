@@ -15,7 +15,7 @@ def run(override_params = None):
 
 	current_file_location  = os.path.dirname(os.path.realpath(__file__))
 
-	log                    = logger.init_log(current_file_location+'/../../logs/vsr.log')
+	log                    = logger.init_log(current_file_location+'/../../../logs/vsr.log')
 
 	log.info("Started module execution: 'query_processor'")
 

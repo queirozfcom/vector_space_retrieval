@@ -4,7 +4,7 @@ from vsr.common.helpers import logger
 from vsr.common.helpers import results as results_helper
 from vsr.common.helpers import plot as plot_helper
 from vsr.common.helpers.extras import merge_params
-from vsr.metrics.measures import f_score, mean_ap, precision, recall
+from vsr.modules.metrics.measures import f_score, mean_ap, precision, recall
 # from vsr.metrics.measures import discounted_cumulative_gain as dcg
 
 import ConfigParser
@@ -17,7 +17,7 @@ def run(override_params = None):
 
 	current_file_location = os.path.dirname(os.path.realpath(__file__))
 
-	log = logger.init_log(current_file_location+'/../../logs/vsr.log')
+	log = logger.init_log(current_file_location+'/../../../logs/vsr.log')
 
 	log.info("Started module execution: 'metrics'")
 
