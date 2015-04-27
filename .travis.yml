@@ -1,12 +1,15 @@
+sudo: required
+
 language: python
 
 python:
   - "2.7"
 
 # command to install dependencies
-
 before_install:
-  - "echo $(ls /usr/lib/jvm)"
+  - "echo $(ls /usr/lib/jvm)" # what jdk do we have?
+  - "sudo apt-get install python-pip"
+  - "sudo apt-get install python-setuptools"
   - "sudo apt-get install libfreetype6-dev"
   - "sudo apt-get install python-tk"
 install:
