@@ -8,6 +8,7 @@ python:
 # command to install dependencies
 before_install:
   - "echo $(ls /usr/lib/jvm)" # what jdk do we have?
+  - "sudo apt-get install libblas-dev liblapack-dev" # scipy needs this
   - "sudo apt-get install python-pip"
   - "sudo apt-get install python-setuptools"
   - "sudo apt-get install libfreetype6-dev"
