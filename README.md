@@ -109,7 +109,7 @@ In other words:
 
 ### Sample graph
 
-- Precision x Recall graph, when [Porter's Stemming Algorithm](http://tartarus.org/martin/PorterStemmer/) is used:
+- Precision x Recall graph (hand-coded indexing and searching), when [Porter's Stemming Algorithm](http://tartarus.org/martin/PorterStemmer/) is used:
  
  ![precision_recall_graph_using_stemmer](http://i.imgur.com/34cA5fp.png "Precision x Recall Graph")
 
@@ -117,7 +117,7 @@ In other words:
 
  ![precision_recall_graph_lucene](http://i.imgur.com/yTnDU2z.png)
 
-- comparing the performance of both approaches:
+- Comparing the performance of both approaches:
 
  ![precicion_recall_comparison](http://i.imgur.com/IIBKcyA.png)
 
