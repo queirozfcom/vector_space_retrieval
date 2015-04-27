@@ -8,11 +8,12 @@ python:
 # command to install dependencies
 before_install:
   - "echo $(ls /usr/lib/jvm)" # what jdk do we have?
-  - "sudo apt-get install libblas-dev liblapack-dev" # scipy needs this
+  - "sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran" # scipy needs this, go figure
   - "sudo apt-get install python-pip"
   - "sudo apt-get install python-setuptools"
   - "sudo apt-get install libfreetype6-dev"
   - "sudo apt-get install python-tk"
+  - "pip install --upgrade pip" # to make sure we have the latest pip
 install:
   - "pip install -r requirements.txt"
 # command to run tests
