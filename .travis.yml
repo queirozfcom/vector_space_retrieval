@@ -6,7 +6,7 @@ python:
 # command to install dependencies
 
 before_install:
-  - "sudo apt-get install openjdk-7-jdk"
+  - "echo $(ls /us/lib/jvm)"
   - "sudo apt-get install libfreetype6-dev"
   - "sudo apt-get install python-tk"
 install:
