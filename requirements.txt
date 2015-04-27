@@ -1,5 +1,4 @@
 JCC==2.20
-lucene==4.9.0
 matplotlib==1.4.3
 nltk==3.0.2
 numpy==1.8.2
