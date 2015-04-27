@@ -29,10 +29,11 @@ Clone repo and run `$ python -m vsr` from the repository root. Outputs for each 
 
  Additionaly, a file in `vsr/modules/indexer/modelo.txt` is included, with specific instructions (in Portuguese) on how to read file `output.csv`.
 
-
 - **Module 'query_processor**
 
- Akin to the previous module, this module creates another *document-term matrix*, but uses queries rather than documents. Additionaly, the expected results are also formated in CSV format to enable future comparison.
+ Akin to the previous module, this module creates another *document-term matrix*, but uses queries rather than documents. 
+
+ Additionaly, the expected results are also formated in CSV format to enable future comparison.
 
  Output files:
  - `vsr/modules/query_processor/output/expected_query_results.csv`
@@ -41,7 +42,9 @@ Clone repo and run `$ python -m vsr` from the repository root. Outputs for each 
 
 - **Module 'search'**
 
- This module uses as input the files generated in the two previous modules, as well as an XML file that contains a list of queries with *expected results*. This module runs the quries against the documents and saves the output in these two files (they have the same data, but the second file is easier to read):
+ This module uses as input the files generated in the two previous modules, as well as an XML file that contains a list of queries with *expected results*. 
+
+ This module runs the quries against the documents and saves the output in these two files (they have the same data, but the second file is easier to read):
  - `vsr/modules/search/output/actual_results.csv`
  - `vsr/modules/search/output/actual_results_only_doc_ids.csv` (same info, lighter format)
 
@@ -94,7 +97,7 @@ In other words:
  - `$ python -m vsr.modules.query_processor` - for module **query_processor**
  - `$ python -m vsr.modules.search` - for module **search**
  - `$ python -m vsr.modules.metrics` - for module **metrics**
- - `$ python -m vsr.modules.pylucene` - for module **metrics**
+ - `$ python -m vsr.modules.pylucene` - for module **pylucene**
 
 ## Other
 
