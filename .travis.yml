@@ -4,7 +4,6 @@ python:
   - "2.7"
 
 # command to install dependencies
-
 before_install:
   - "echo $(ls /us/lib/jvm)"
   - "sudo apt-get install libfreetype6-dev"
