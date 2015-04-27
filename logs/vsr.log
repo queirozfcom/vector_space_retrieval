@@ -1,3 +1,88 @@
-26 Apr 03:38:28 INFO: Started module execution: 'pylucene'
-26 Abr 03:38:28 INFO: Opened a lucene index at /tmp/lucene-index for reading
-26 Abr 03:38:28 INFO: Finished module execution: 'pylucene'
+27 Apr 02:45:59 INFO: Started module execution: 'inverted_index'
+27 Apr 02:45:59 WARNING: Found article with no contents (36); skipped.
+27 Apr 02:45:59 WARNING: Found article with no contents (38); skipped.
+27 Apr 02:45:59 WARNING: Found article with no contents (128); skipped.
+27 Apr 02:45:59 WARNING: Found article with no contents (129); skipped.
+27 Apr 02:45:59 WARNING: Found article with no contents (132); skipped.
+27 Apr 02:45:59 INFO: Read 162 articles from file ../../data/cf74.xml
+27 Apr 02:46:00 WARNING: Found article with no contents (168); skipped.
+27 Apr 02:46:00 WARNING: Found article with no contents (169); skipped.
+27 Apr 02:46:00 WARNING: Found article with no contents (298); skipped.
+27 Apr 02:46:00 WARNING: Found article with no contents (329); skipped.
+27 Apr 02:46:00 INFO: Read 184 articles from file ../../data/cf75.xml
+27 Apr 02:46:01 WARNING: Found article with no contents (493); skipped.
+27 Apr 02:46:01 WARNING: Found article with no contents (512); skipped.
+27 Apr 02:46:01 WARNING: Found article with no contents (551); skipped.
+27 Apr 02:46:01 INFO: Read 224 articles from file ../../data/cf76.xml
+27 Apr 02:46:02 WARNING: Found article with no contents (595); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (712); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (729); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (735); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (736); skipped.
+27 Apr 02:46:02 INFO: Read 194 articles from file ../../data/cf77.xml
+27 Apr 02:46:02 WARNING: Found article with no contents (839); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (840); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (894); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (895); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (932); skipped.
+27 Apr 02:46:02 WARNING: Found article with no contents (939); skipped.
+27 Apr 02:46:02 INFO: Read 193 articles from file ../../data/cf78.xml
+27 Apr 02:46:03 WARNING: Found article with no contents (1023); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1069); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1070); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1089); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1150); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1151); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1154); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1187); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1188); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1225); skipped.
+27 Apr 02:46:03 WARNING: Found article with no contents (1226); skipped.
+27 Apr 02:46:03 INFO: Read 248 articles from file ../../data/cf79.xml
+27 Apr 02:46:14 INFO: Finished module execution: 'inverted_index'
+27 Apr 02:46:14 INFO: Started module execution: 'indexer'
+27 Apr 02:46:29 INFO: Finished module execution: 'indexer'
+27 Apr 02:46:29 INFO: Started module execution: 'query_processor'
+27 Apr 02:46:31 INFO: Read 99 queries from file ../../data/cfquery.xml
+27 Apr 02:46:31 INFO: Finished module execution: 'query_processor'
+27 Apr 02:46:31 INFO: Started module execution: 'search'
+27 Apr 02:46:41 INFO: Finished module execution: 'search'
+27 Apr 02:46:41 INFO: Started module execution: 'metrics'
+27 Abr 02:46:42 INFO: Finished module execution: 'metrics'
+27 Abr 02:46:42 INFO: Started module execution: 'pylucene'
+27 Abr 02:46:43 WARNING: Found article with no contents (36); not adding to lucene index.
+27 Abr 02:46:43 WARNING: Found article with no contents (38); not adding to lucene index.
+27 Abr 02:46:43 WARNING: Found article with no contents (128); not adding to lucene index.
+27 Abr 02:46:43 WARNING: Found article with no contents (129); not adding to lucene index.
+27 Abr 02:46:43 WARNING: Found article with no contents (132); not adding to lucene index.
+27 Abr 02:46:44 WARNING: Found article with no contents (168); not adding to lucene index.
+27 Abr 02:46:44 WARNING: Found article with no contents (169); not adding to lucene index.
+27 Abr 02:46:44 WARNING: Found article with no contents (298); not adding to lucene index.
+27 Abr 02:46:44 WARNING: Found article with no contents (329); not adding to lucene index.
+27 Abr 02:46:45 WARNING: Found article with no contents (493); not adding to lucene index.
+27 Abr 02:46:45 WARNING: Found article with no contents (512); not adding to lucene index.
+27 Abr 02:46:45 WARNING: Found article with no contents (551); not adding to lucene index.
+27 Abr 02:46:46 WARNING: Found article with no contents (595); not adding to lucene index.
+27 Abr 02:46:46 WARNING: Found article with no contents (712); not adding to lucene index.
+27 Abr 02:46:46 WARNING: Found article with no contents (729); not adding to lucene index.
+27 Abr 02:46:46 WARNING: Found article with no contents (735); not adding to lucene index.
+27 Abr 02:46:46 WARNING: Found article with no contents (736); not adding to lucene index.
+27 Abr 02:46:47 WARNING: Found article with no contents (839); not adding to lucene index.
+27 Abr 02:46:47 WARNING: Found article with no contents (840); not adding to lucene index.
+27 Abr 02:46:47 WARNING: Found article with no contents (894); not adding to lucene index.
+27 Abr 02:46:47 WARNING: Found article with no contents (895); not adding to lucene index.
+27 Abr 02:46:47 WARNING: Found article with no contents (932); not adding to lucene index.
+27 Abr 02:46:47 WARNING: Found article with no contents (939); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1023); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1069); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1070); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1089); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1150); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1151); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1154); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1187); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1188); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1225); not adding to lucene index.
+27 Abr 02:46:48 WARNING: Found article with no contents (1226); not adding to lucene index.
+27 Abr 02:46:48 INFO: Finished building lucene index at /tmp/lucene-index with 1205 documents
+27 Abr 02:46:48 INFO: Opened a lucene index at /tmp/lucene-index for reading

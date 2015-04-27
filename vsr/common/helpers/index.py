@@ -11,11 +11,6 @@ import pprint as pp
 import nltk
 import sys
 
-# stemmer = PorterStemmer()
-# res     = stemmer.stem("civilizations",0,12)
-# print(res)
-# sys.exit()
-
 # Returns an inverted index (a dict where keys are terms and values are document identifiers)
 #   from a token list. The token list should be a dict where keys are document identifiers and 
 #   values are the list of tokens present in that document

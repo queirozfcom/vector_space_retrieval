@@ -1,6 +1,7 @@
 from __future__ import division
 import sys, os, lucene
 from xml.dom import minidom
+from collections import OrderedDict
 
 # helpers
 from vsr.common.helpers import dom
@@ -8,7 +9,8 @@ from vsr.common.helpers import dom
 # java stuff    
 from java.io import File
 from org.apache.lucene.analysis.miscellaneous import LimitTokenCountAnalyzer
-from org.apache.lucene.analysis.standard import StandardAnalyzer
+# from org.apache.lucene.analysis.standard import StandardAnalyzer
+from org.apache.lucene.analysis.en import EnglishAnalyzer
 from org.apache.lucene.document import Document, Field, TextField, IntField
 from org.apache.lucene.index import FieldInfo, IndexWriter, IndexWriterConfig, DirectoryReader
 from org.apache.lucene.store import SimpleFSDirectory
@@ -20,15 +22,9 @@ from org.apache.lucene.search import IndexSearcher
 
 def index_files(path,log,input_files):
 
-
-
     directory   = _get_store(path)
-        
-    
     analyzer    = _get_analyzer()
     
-    # analyzer  = LimitTokenCountAnalyzer(analyzer, 10000)
-
     config      = IndexWriterConfig(Version.LUCENE_CURRENT, analyzer)
     config.setOpenMode(IndexWriterConfig.OpenMode.CREATE)
     writer      = IndexWriter(directory, config)
@@ -68,7 +64,7 @@ def index_files(path,log,input_files):
 
 # Searches the given lucene index using given query and return a list of document_ids, ranked from
 #  highest to lowest scoring
-def search_abstract(path_to_index,query,log):
+def search_abstracts(path_to_index,queries_dict,log, no_of_results = 500):
     
     analyzer      = _get_analyzer()
     store         = _get_store(path_to_index)
@@ -77,23 +73,47 @@ def search_abstract(path_to_index,query,log):
     log.info("Opened a lucene index at {0} for reading".format(path_to_index))
 
     query_parser  = QueryParser(Version.LUCENE_CURRENT, "abstract", analyzer)
-    parsed_query  = query_parser.parse(query)
 
-    docs          = searcher.search(parsed_query,500).scoreDocs
+    results_dict  = OrderedDict()
 
-    doc_ids       = list()
+    for query_id,query_text in queries_dict.iteritems():
 
-    for i,hit in enumerate(docs):
-        doc    = searcher.doc(hit.doc)
+        # because the query might have special characters and we don't want to 
+        # have those interpreted
+        escaped_text     = query_parser.escape(query_text)
+        parsed_query     = query_parser.parse(escaped_text)
+        docs             = searcher.search(parsed_query,no_of_results).scoreDocs
 
-        # this is the doc_id that I indexed, not the one lucene gave the doc
-        doc_id = doc.get("doc_id")
-        doc_ids.append(doc_id)
+        matching_doc_ids = list()
 
-    return(doc_ids)   
+        for i,hit in enumerate(docs):
+            doc    = searcher.doc(hit.doc)
+
+            # this is the doc_id that I indexed, not the one lucene gave the doc
+            doc_id = int(doc.get("doc_id"))
+            matching_doc_ids.append(doc_id)
+
+        results_dict[query_id] = matching_doc_ids    
+
+    return(results_dict)   
+
+def tokenize_query(query_text):
+    analyzer      = _get_analyzer()
+
+    query_parser  = QueryParser(Version.LUCENE_CURRENT, "abstract", analyzer)
+
+    escaped_text     = query_parser.escape(query_text)
+    parsed_query     = query_parser.parse(escaped_text)
+
+    return(parsed_query)
+
 
 def _get_analyzer():
-    analyzer    = StandardAnalyzer(Version.LUCENE_CURRENT)
+    # see http://stackoverflow.com/a/17028273/436721
+    # for reasons why I used EnglishAnalyzer instead of StandardAnalyzer
+    # (it does porter stemming and other niceties)
+    analyzer    = EnglishAnalyzer(Version.LUCENE_CURRENT)
+
     return(analyzer)                   
 
 def _get_store(path):

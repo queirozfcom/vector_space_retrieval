@@ -1,8 +1,9 @@
-from vsr.modules.inverted_index.main import run as run_inverted_index
-from vsr.modules.indexer.main import run as run_indexer
-from vsr.modules.query_processor.main import run as run_query_processor
-from vsr.modules.search.main import run as run_search
-from vsr.modules.metrics.main import run as run_metrics
+from vsr.modules.inverted_index.__main__ import run as run_inverted_index
+from vsr.modules.indexer.__main__ import run as run_indexer
+from vsr.modules.query_processor.__main__ import run as run_query_processor
+from vsr.modules.search.__main__ import run as run_search
+from vsr.modules.metrics.__main__ import run as run_metrics
+from vsr.modules.pylucene.__main__ import run as run_pylucene
 
 import ConfigParser
 import os
@@ -19,6 +20,7 @@ def run_all_modules(global_params):
     run_query_processor(override_params = global_params)
     run_search(override_params = global_params)
     run_metrics(override_params = global_params)
+    run_pylucene() # this module takes no options
 
     elapsed_time = time.time() - start_time
 
