@@ -1,7 +1,4 @@
 decorator==3.4.0
-dirspec==13.10
-duplicity==0.6.23
-gyp==0.1
 html5lib==0.999
 httplib2==0.8
 JCC==2.20
