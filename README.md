@@ -9,7 +9,7 @@ Clone repo and run `$ python -m vsr` from the repository root. Outputs for each 
 
 ## Project Structure
 
- This is a python project. It is split among 5 modules: `inverted_index`, `indexer`, `query_processor`, `search` and `metrics`
+ This is a python project. It is split among 6 modules: `inverted_index`, `indexer`, `query_processor`, `search`, `metrics` and `pylucene`.
 
  XML files representing articles and journal entries on **Cystic Fibrosis** can be found under `vsr/data`.
 
@@ -51,6 +51,18 @@ Clone repo and run `$ python -m vsr` from the repository root. Outputs for each 
 
  All results are located under `vsr/modules/metrics/output`, including a png image.
 
+- **Module 'pylucene'**
+	
+ This module is a little bit different from the others inasmuch as it does a little bit of everything. This module uses [Apache Lucene](https://lucene.apache.org/core/) and its objective is to perform the same operations in the other modules but using Lucene rather than coding algorithms by hand.
+
+ It indexes all documents and queries using Lucene's [EnglishAnalyzer](http://lucene.apache.org/core/4_2_0/analyzers-common/org/apache/lucene/analysis/en/EnglishAnalyzer.html) - it provides stemming, stop word removal and other niceties for texts in the English language.
+
+ All metrics (similar to those in module `'metrics'`) are executed in this module as well.
+
+ All outputs live under directory `vsr/modules/pylucene/output`. They include csv files and a png graph. They can be compared to those under `vsr/modules/metrics/output` so as to see how hand-coded indexing fares in comparison to Lucene.
+
+ - [Link to pylucene project](https://lucene.apache.org/pylucene/install.html)
+
 ## Project dependencies
 
 This project was built using Python version 2.7, on Ubuntu 14.04. The following python dependencies are needed to run it:
@@ -60,6 +72,7 @@ This project was built using Python version 2.7, on Ubuntu 14.04. The following 
  - nltk
  - toolz
  - matplotlib
+ - pylucene, via JCC
 
 > Look at [Getting Started with Python NLTk on Ubuntu](http://queirozf.com/entries/getting-started-with-python-nltk-on-ubuntu) for more info on how to install these if you're using the Ubuntu OS.
 
@@ -81,6 +94,7 @@ In other words:
  - `$ python -m vsr.modules.query_processor` - for module **query_processor**
  - `$ python -m vsr.modules.search` - for module **search**
  - `$ python -m vsr.modules.metrics` - for module **metrics**
+ - `$ python -m vsr.modules.pylucene` - for module **metrics**
 
 ## Other
 
@@ -90,10 +104,23 @@ In other words:
 - `logs/` - Log files. Useful for debugging purposes.
 - `.cfg` files - Config files. Each module has one config file.
   - Please note that, when running each module individually the same options (section [Params]) should be set across the modules, in order to prevent inconsistencies.
+- tests
+  - A single test case (running the whole project) was created so that mistakes are found early.
 
 ### Sample graph
 
 - Precision x Recall graph, when [Porter's Stemming Algorithm](http://tartarus.org/martin/PorterStemmer/) is used:
  
  ![precision_recall_graph_using_stemmer](http://i.imgur.com/34cA5fp.png "Precision x Recall Graph")
+
+- Precision x Recall graph, using Lucene's English Analyzer:
+
+ ![precision_recall_graph_lucene](http://i.imgur.com/yTnDU2z.png)
+
+- comparing the performance of both approaches:
+
+ ![precicion_recall_comparison](http://i.imgur.com/IIBKcyA.png)
+
+
+
 

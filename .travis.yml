@@ -6,6 +6,7 @@ python:
   - "2.7"
 
 # command to install dependencies
+# see http://stackoverflow.com/questions/11114225/installing-scipy-and-numpy-using-pip
 before_install:
   - "echo $(ls /usr/lib/jvm)" # what jdk do we have?
   - "sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran" # scipy needs this, go figure

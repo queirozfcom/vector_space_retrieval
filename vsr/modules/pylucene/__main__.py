@@ -37,8 +37,9 @@ def run():
     EXPECTED_RESULTS_FILE = current_file+'/../query_processor/output/expected_query_results_only_doc_ids.csv'   
     RAW_QUERIES_FILE      = current_file+'/../query_processor/output/raw_queries.csv'
     OUTPUT_DIRECTORY      = current_file+'/output/'
+    ACTUAL_RESULTS_FILE   = current_file+'/../search/output/actual_results_only_doc_ids.csv'
 
-    lucene_helper.index_files(INDEX_DIR, log=log, input_files = INPUT_FILES)       
+    # lucene_helper.index_files(INDEX_DIR, log=log, input_files = INPUT_FILES)       
 
     # an ordered dict mapping query_ids to document_ids
     expected_results      = results_helper.load_from_csv_file(EXPECTED_RESULTS_FILE)
@@ -52,39 +53,53 @@ def run():
 
 
     # a dict mapping query_ids to document_ids (same structure as above)
-    actual_results        = lucene_helper.search_abstracts(INDEX_DIR,raw_queries, log)
+    actual_results         = results_helper.load_from_csv_file(ACTUAL_RESULTS_FILE)
+    actual_results_lu      = lucene_helper.search_abstracts(INDEX_DIR,raw_queries, log)
+
 
     # calculating the same metrics that we did before (under module 'metrics')
-    precisions            = precision.calculate(expected_results,actual_results)
-    recalls               = recall.calculate(expected_results,actual_results)
-    f1_scores             = f_score.calculate(expected_results,actual_results,beta=1)
-    mean_ap_value         = mean_ap.calculate(expected_results,actual_results)    
-    precisions_at_10      = precision.calculate(expected_results,actual_results,threshold=10)
-    precision_11_points   = precision.calculate_points(expected_results,actual_results)
+    precisions_lu          = precision.calculate(expected_results,actual_results_lu)
+    recalls_lu             = recall.calculate(expected_results,actual_results_lu)
+    f1_scores_lu           = f_score.calculate(expected_results,actual_results_lu,beta=1)
+    mean_ap_value_lu       = mean_ap.calculate(expected_results,actual_results_lu)    
+    precisions_at_10_lu    = precision.calculate(expected_results,actual_results_lu,threshold=10)
+
+    # so we can compare both in a graph
+    precision_11_points    = precision.calculate_points(expected_results,actual_results)
+    precision_11_points_lu = precision.calculate_points(expected_results,actual_results_lu)
 
     # tokenized queries so that possible code reviewers can see what's going on
     results_helper.write_to_csv_file(tokenized_queries,OUTPUT_DIRECTORY+'tokenized_queries.csv')
 
-    # the results from using lucene. They're displayed in the same format as the results from other
+    # the results using lucene. They're displayed in the same format as the results from other
     # modules, so we can easily compare the performance of both
-    results_helper.write_to_csv_file(actual_results,OUTPUT_DIRECTORY+'search_results_only_doc_ids.csv')
+    results_helper.write_to_csv_file(actual_results_lu,OUTPUT_DIRECTORY+'search_results_only_doc_ids.csv')
 
     # metrics for this module
-    results_helper.write_to_csv_file(precisions,OUTPUT_DIRECTORY+'precisions.csv')
-    results_helper.write_to_csv_file(recalls,OUTPUT_DIRECTORY+'recalls.csv')
-    results_helper.write_to_csv_file(f1_scores,OUTPUT_DIRECTORY+'f1_scores.csv')
-    results_helper.write_to_csv_file(precisions_at_10,OUTPUT_DIRECTORY+'precisions_at_10.csv')
-    results_helper.write_to_csv_file(precision_11_points,OUTPUT_DIRECTORY+'precision_11_points.csv')
+    results_helper.write_to_csv_file(precisions_lu,OUTPUT_DIRECTORY+'precisions_lucene.csv')
+    results_helper.write_to_csv_file(recalls_lu,OUTPUT_DIRECTORY+'recalls_lucene.csv')
+    results_helper.write_to_csv_file(f1_scores_lu,OUTPUT_DIRECTORY+'f1_scores_lucene.csv')
+    results_helper.write_to_csv_file(precisions_at_10_lu,OUTPUT_DIRECTORY+'precisions_at_10_lucene.csv')
+    results_helper.write_to_csv_file(precision_11_points_lu,OUTPUT_DIRECTORY+'precision_11_points_lucene.csv')
 
     # mean_ap is a single number
-    with open(OUTPUT_DIRECTORY+'mean_ap.txt','w') as outfile:
-        outfile.write(str(mean_ap_value))
+    with open(OUTPUT_DIRECTORY+'mean_ap_lucene.txt','w') as outfile:
+        outfile.write(str(mean_ap_value_lu))
 
     plot_helper.plot_recall_precision_curve(
-        precision_11_points,
+        precision_11_points_lu,
         title = "Precision-Recall curve (using EnglishAnalyzer on Lucene)",
         display = False,
-        filename = OUTPUT_DIRECTORY+'precision_11_points.png' )
+        color   = 'r',
+        filename = OUTPUT_DIRECTORY+'precision_11_points_lucene.png' )
+
+    plot_helper.plot_merged_recall_precision_curve(
+        precision_11_points,
+        precision_11_points_lu,
+        colors = ['b','r'],
+        titles = ["Hand-coded indexing and searching","Using Lucene's EnglishAnalyzer"],
+        display = False,
+        filename=OUTPUT_DIRECTORY+'precision_11_points_comparison.png')
 
     log.info("Finished module execution: 'pylucene'")
     print("Finished module execution: 'pylucene'")
