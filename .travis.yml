@@ -9,7 +9,7 @@ python:
 # see http://stackoverflow.com/questions/11114225/installing-scipy-and-numpy-using-pip
 before_install:
   - "echo $(ls /usr/lib/jvm)" # what jdk do we have?
-  - "mkdir /tmp/lucene-index"
+  - "mkdir /tmp/lucene-index" # 
   - "sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran" # scipy needs this, go figure
   - "sudo apt-get install python-pip"
   - "sudo apt-get install python-setuptools"
@@ -19,6 +19,19 @@ before_install:
   - "sudo apt-get install libfreetype6-dev"
   - "sudo apt-get install python-tk"
   - "pip install --upgrade pip" # to make sure we have the latest pip
+  # pylucene, see http://bendemott.blogspot.com.br/2013/11/installing-pylucene-4-451.html
+  - "sudo apt-get install ant"
+  - "sudo apt-get install g++"
+  - "sudo apt-get install python-dev"
+  - "wget http://www.us.apache.org/dist/lucene/pylucene/pylucene-4.9.0-0-src.tar.gz"
+  - "tar -zxvf pylucene-4.9.0-0-src.tar.gz && mv pylucene-4.9.0-0 pylucene"
+  - "cd pylucene"
+  - "sudo python setup.py build"
+  - "sudo python setup.py install"
+  # i'm using travis to set the enviroment variables!
+  - "make"
+  - "sudo make install"
+
 
 # make pip see global stuff
 virtualenv:
