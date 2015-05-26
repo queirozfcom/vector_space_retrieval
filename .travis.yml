@@ -12,6 +12,7 @@ before_install:
   - "sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran" # scipy needs this, go figure
   - "sudo apt-get install python-pip"
   - "sudo apt-get install python-setuptools"
+  - "sudo apt-get install python-scipy"
   - "sudo apt-get install libfreetype6-dev"
   - "sudo apt-get install python-tk"
   - "pip install --upgrade pip" # to make sure we have the latest pip
