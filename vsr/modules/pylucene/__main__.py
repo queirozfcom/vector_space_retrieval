@@ -39,7 +39,7 @@ def run():
     OUTPUT_DIRECTORY      = current_file+'/output/'
     ACTUAL_RESULTS_FILE   = current_file+'/../search/output/actual_results_only_doc_ids.csv'
 
-    # lucene_helper.index_files(INDEX_DIR, log=log, input_files = INPUT_FILES)       
+    lucene_helper.index_files(INDEX_DIR, log=log, input_files = INPUT_FILES)       
 
     # an ordered dict mapping query_ids to document_ids
     expected_results      = results_helper.load_from_csv_file(EXPECTED_RESULTS_FILE)

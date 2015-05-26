@@ -101,6 +101,13 @@ In other words:
  - `$ python -m vsr.modules.metrics` - for module **metrics**
  - `$ python -m vsr.modules.pylucene` - for module **pylucene**
 
+## Credits
+
+- Thank you **_habnabit** and **puff** on **#python@freenode** for helping out.
+- [Using apt-get to install python dependencies on Ubuntu](http://danielnouri.org/notes/2012/11/23/use-apt-get-to-install-python-dependencies-for-travis-ci/)
+- [An introduction to pip and virtualenv](http://www.dabapps.com/blog/introduction-to-pip-and-virtualenv-python/)]
+
+
 ## Other
 
 - `.out` files - These are [pickle](https://docs.python.org/2/library/pickle.html) dumps of some key data structures used in this project. useful for debugging purposes.

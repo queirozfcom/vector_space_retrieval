@@ -9,6 +9,7 @@ python:
 # see http://stackoverflow.com/questions/11114225/installing-scipy-and-numpy-using-pip
 before_install:
   - "echo $(ls /usr/lib/jvm)" # what jdk do we have?
+  - "mkdir /tmp/lucene-index"
   - "sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran" # scipy needs this, go figure
   - "sudo apt-get install python-pip"
   - "sudo apt-get install python-setuptools"
