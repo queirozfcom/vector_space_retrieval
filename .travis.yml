@@ -27,12 +27,13 @@ before_install:
   - "tar -zxvf pylucene-4.9.0-0-src.tar.gz"
   - "mv pylucene-4.9.0-0 pylucene"
   - "cd pylucene/jcc"
-  - "sudo python setup.py build"
-  - "sudo python setup.py install"
-  # i'm using travis to set the enviroment variables!
+  # see http://stackoverflow.com/a/8633575/436721
+  - "sudo -E bash -c 'python setup.py build'"
+  - "sudo -E bash -c 'python setup.py install'"
+  # i'm using travis to set the enviroment variables, that's why I'm not changing the config file
   - "cd .."
   - "make"
-  - "sudo make install"
+  - "sudo -E bash -c 'make install'"
 
 
 # make pip see global stuff
