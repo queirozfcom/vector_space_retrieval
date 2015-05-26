@@ -26,10 +26,11 @@ before_install:
   - "wget http://www.us.apache.org/dist/lucene/pylucene/pylucene-4.9.0-0-src.tar.gz"
   - "tar -zxvf pylucene-4.9.0-0-src.tar.gz"
   - "mv pylucene-4.9.0-0 pylucene"
-  - "cd pylucene"
+  - "cd pylucene/jcc"
   - "sudo python setup.py build"
   - "sudo python setup.py install"
   # i'm using travis to set the enviroment variables!
+  - "cd .."
   - "make"
   - "sudo make install"
 
