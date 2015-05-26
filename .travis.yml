@@ -13,9 +13,16 @@ before_install:
   - "sudo apt-get install python-pip"
   - "sudo apt-get install python-setuptools"
   - "sudo apt-get install python-scipy"
+  - "sudo apt-get install python-matplotlib"
+  - "sudo apt-get install python-nltk"
   - "sudo apt-get install libfreetype6-dev"
   - "sudo apt-get install python-tk"
   - "pip install --upgrade pip" # to make sure we have the latest pip
+
+# make pip see global stuff
+virtualenv:
+  system_site_packages: true
+
 install:
   - "pip install -r requirements.txt"
 # command to run tests
