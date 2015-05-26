@@ -15,6 +15,9 @@ import nltk
 import toolz.dicttoolz as dt
 import sys
 
+if not nltk.download('stopwords'):
+	nltk.download('stopwords')
+
 def run(override_params = None):
 
 	current_file_location            = os.path.dirname(os.path.realpath(__file__))
