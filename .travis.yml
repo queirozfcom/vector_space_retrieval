@@ -36,6 +36,8 @@ before_install:
   - "make"
   - "sudo -E bash -c 'make install'"
   - "cd .." # back to initial directory (or we won't find requirements.txt)
+  # see http://askubuntu.com/a/527408/21645
+  - 'sudo perl -pi -e ''s#DEFAULT_URL = .*#DEFAULT_URL = "http://nltk.github.com/nltk_data/"#'' /usr/lib/python2.7/dist-packages/nltk/downloader.py'
 
 
 # make pip see global stuff
