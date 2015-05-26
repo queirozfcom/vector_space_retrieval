@@ -31,9 +31,11 @@ before_install:
   - "sudo -E bash -c 'python setup.py build'"
   - "sudo -E bash -c 'python setup.py install'"
   # i'm using travis to set the enviroment variables, that's why I'm not changing the config file
+  # see https://travis-ci.org/queirozfcom/vector_space_retrieval/settings/env_vars
   - "cd .."
   - "make"
   - "sudo -E bash -c 'make install'"
+  - "cd .." # back to initial directory (or we won't find requirements.txt)
 
 
 # make pip see global stuff
