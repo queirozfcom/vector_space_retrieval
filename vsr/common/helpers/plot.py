@@ -92,7 +92,7 @@ def plot_merged_recall_precision_curve(series_one, series_two, colors, titles, d
                     xy=(i,j),
                     weight=10,
                     arrowprops=dict(
-                        arrowstyle="->"
+                        arrowstyle="->",
                         connectionstyle="arc3"),
                     xytext=textpos)
 
