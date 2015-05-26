@@ -20,6 +20,7 @@ before_install:
   - "sudo apt-get install python-tk"
   - "pip install --upgrade pip" # to make sure we have the latest pip
   # pylucene, see http://bendemott.blogspot.com.br/2013/11/installing-pylucene-4-451.html
+  - "sudo apt-get install openjdk-7-jdk"
   - "sudo apt-get install ant"
   - "sudo apt-get install g++"
   - "sudo apt-get install python-dev"
